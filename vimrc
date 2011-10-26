@@ -62,6 +62,7 @@ if has("autocmd")
     autocmd FileType python set complete+=k~/.vim/autocomplete/pydiction textwidth=79
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
+    autocmd FileType objc set tabstop=2 softtabstop=2 shiftwidth=2
 endif
 
 " use Ctrl+j/h/k/l to move the cursor when editing
