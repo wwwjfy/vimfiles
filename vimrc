@@ -31,7 +31,6 @@ set autoindent
 set nowrap
 set backspace=indent,eol,start
 set foldmethod=marker
-set commentstring=\ #\ %s
 set foldlevel=0
 "set clipboard+=unnamed
 
@@ -59,7 +58,7 @@ set laststatus=2
 set enc=utf-8
 
 if has("autocmd")
-    autocmd FileType python set complete+=k~/.vim/autocomplete/pydiction textwidth=79
+    autocmd FileType python set complete+=k~/.vim/autocomplete/pydiction textwidth=79 commentstring=#\ %s
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
     autocmd FileType objc set tabstop=2 softtabstop=2 shiftwidth=2
