@@ -58,7 +58,7 @@ set laststatus=2
 set enc=utf-8
 
 if has("autocmd")
-    autocmd FileType python set complete+=k~/.vim/autocomplete/pydiction textwidth=79 commentstring=#\ %s
+    autocmd FileType python set tabstop=4 softtabstop=4 shiftwidth=4 complete+=k~/.vim/autocomplete/pydiction textwidth=79 commentstring=#\ %s
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
     autocmd FileType objc set tabstop=2 softtabstop=2 shiftwidth=2
