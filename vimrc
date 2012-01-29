@@ -13,7 +13,7 @@ let mapleader=","
 
 set nobackup
 set autoread
-"set background=light
+set background=dark
 color solarized
 
 set ff=unix
