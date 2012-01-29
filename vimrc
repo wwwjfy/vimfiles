@@ -13,7 +13,8 @@ let mapleader=","
 
 set nobackup
 set autoread
-color xoria256
+"set background=light
+color solarized
 
 set ff=unix
 set so=4
