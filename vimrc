@@ -78,12 +78,15 @@ imap <Up> <C-o>gk
 imap <Down> <C-o>gj
 
 " save when insert or not, for <C-s> does not work for some unknown reason.
-" not work in Mac
+" not work on Mac
 "map <F2> <Esc>:w<CR>
 "imap <F2> <Esc><F2>
 
 imap <C-e> <C-x><C-e>
 imap <C-y> <C-x><C-y>
+
+" save files using sudo
+cmap w!! %!sudo tee > /dev/null %
 
 " vimwiki start
 let g:vimwiki_list = [
@@ -96,6 +99,9 @@ hi IndentGuidesEven ctermbg=darkgrey
 let indent_guides_guide_size=1
 let indent_guides_start_level=2
 let indent_guides_enable_on_vim_startup=1
+
+" taglist
+let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 
 " show page number on tab line
 set showtabline=2
