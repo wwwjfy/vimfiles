@@ -66,8 +66,7 @@ if has("autocmd")
     autocmd FileType python set complete+=k~/.vim/autocomplete/pydiction textwidth=79 commentstring=#\ %s
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
-    autocmd FileType objc set tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd FileType coffee set tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
 endif
 
 " use arrow keys <Up> <Down> to move between
