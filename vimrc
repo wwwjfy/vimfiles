@@ -101,3 +101,5 @@ let indent_guides_enable_on_vim_startup=1
 
 " taglist
 "let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
