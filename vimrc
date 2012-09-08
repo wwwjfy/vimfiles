@@ -52,6 +52,9 @@ set showcmd
 " always show tabline
 set showtabline=2
 
+" avoid "Press ENTER or type command to continue"
+set cmdheight=2
+
 set matchtime=2
 
 set laststatus=2
