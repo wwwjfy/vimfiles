@@ -103,6 +103,8 @@ let indent_guides_guide_size=1
 let indent_guides_start_level=2
 let indent_guides_enable_on_vim_startup=1
 
+let g:Powerline_symbols = 'fancy'
+
 " taglist
 "let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 
