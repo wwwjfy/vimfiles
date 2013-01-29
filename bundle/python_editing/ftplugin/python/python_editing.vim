@@ -4,16 +4,16 @@ finish
 endif
 let b:did_ftplugin = 1
 
-map <unique> <S-e> :w<CR>:!/usr/bin/env python % <CR>
+map <buffer> <unique> <S-e> :w<CR>:!/usr/bin/env python % <CR>
 " gd: Go to Definition
-map <unique> gd /\<\(def\\|class\) <C-R><C-W>\><CR> 
+map <buffer> <unique> gd /\<\(def\\|class\) <C-R><C-W>\><CR>
 
 set foldmethod=expr
 set foldexpr=PythonFoldExpr(v:lnum)
 set foldtext=PythonFoldText()
 
-map <unique> f za
-map <unique> F :call ToggleFold()<CR>
+map <buffer> <unique> f za
+map <buffer> <unique> F :call ToggleFold()<CR>
 let b:folded = 1
 
 function! ToggleFold()
