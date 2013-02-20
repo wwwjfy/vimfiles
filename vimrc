@@ -91,6 +91,7 @@ if has("autocmd")
     autocmd FileType gitconfig set noexpandtab
     autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
     autocmd BufNewFile,BufRead *.md set filetype=markdown
+    autocmd BufNewFile,BufRead *.go set filetype=go
 endif
 " }}}
 " Tweaks {{{
