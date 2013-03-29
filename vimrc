@@ -80,7 +80,7 @@ cnoremap <C-a> <home>
 cnoremap <C-e> <end>
 inoremap <C-a> <esc>I
 inoremap <C-e> <esc>A
-inoremap <C-k> <esc>C
+inoremap <C-k> <esc>lC
 " }}}
 
 " }}}
