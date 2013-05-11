@@ -10,6 +10,7 @@ set encoding=utf-8
 
 " Input Mode {{{
 let mapleader=","
+let maplocalleader="\\"
 set nobackup
 set autoread
 set fileformat=unix
@@ -70,10 +71,12 @@ set t_vb=
 " Mapping {{{
 " use arrow keys <Up> <Down> to move between
 " lines in a wrapped long line
-map <Up> gk
-map <Down> gj
-imap <Up> <C-o>gk
-imap <Down> <C-o>gj
+nnoremap <Up> gk
+nnoremap <Down> gj
+vnoremap <Up> gk
+vnoremap <Down> gj
+inoremap <Up> <C-o>gk
+inoremap <Down> <C-o>gj
 
 " Emacs-compatible keys {{{
 cnoremap <C-a> <home>
@@ -97,7 +100,7 @@ endif
 " Tweaks {{{
 
 " save files using sudo
-cmap w!! %!sudo tee > /dev/null %
+cnoremap w!! %!sudo tee > /dev/null %
 
 " }}}
 " plugin configurations {{{
