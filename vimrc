@@ -36,6 +36,7 @@ set shiftwidth=4
 set nowrap
 set showmatch
 set showcmd
+set cursorline
 
 " always show tabline
 set showtabline=2
@@ -118,9 +119,6 @@ let indent_guides_start_level=2
 let indent_guides_enable_on_vim_startup=1
 
 let g:Powerline_symbols = 'fancy'
-
-" taglist
-"let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
