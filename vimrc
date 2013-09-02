@@ -80,6 +80,8 @@ vnoremap <Down> gj
 inoremap <Up> <C-o>gk
 inoremap <Down> <C-o>gj
 
+nnoremap <silent> <leader><space> :noh<cr>
+
 " Emacs-compatible keys {{{
 cnoremap <C-a> <home>
 cnoremap <C-e> <end>
