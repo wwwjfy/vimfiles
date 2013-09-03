@@ -37,6 +37,7 @@ set nowrap
 set showmatch
 set showcmd
 set cursorline
+set colorcolumn=+0
 
 " always show tabline
 set showtabline=2
@@ -94,6 +95,7 @@ inoremap <C-k> <C-o>D
 " File Type {{{
 if has("autocmd")
     autocmd FileType python set complete+=k~/.vim/autocomplete/pydiction textwidth=79 commentstring=#\ %s
+    autocmd FileType python match ErrorMsg '\%>79v.\+'
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
     autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
