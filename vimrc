@@ -126,4 +126,7 @@ let g:Powerline_symbols = 'fancy'
 
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
+au VimEnter * RainbowParenthesesActivate
+au Syntax * RainbowParenthesesLoadRound
+
 " }}}
