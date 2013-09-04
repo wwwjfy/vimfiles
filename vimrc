@@ -86,9 +86,12 @@ nnoremap <silent> <leader><space> :noh<cr>
 " Emacs-compatible keys {{{
 cnoremap <C-a> <home>
 cnoremap <C-e> <end>
-inoremap <C-a> <esc>I
-inoremap <C-e> <esc>A
+inoremap <C-a> <C-o>^
+inoremap <C-e> <C-o>$
 inoremap <C-k> <C-o>D
+inoremap <C-b> <C-o>h
+inoremap <C-f> <C-o>l
+inoremap <C-d> <C-o>x
 " }}}
 
 " }}}
