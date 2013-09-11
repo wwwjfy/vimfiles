@@ -102,6 +102,7 @@ if has("autocmd")
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
     autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType c,cpp inoremap <buffer> {<cr> {<cr>}<c-o>O
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
 endif
