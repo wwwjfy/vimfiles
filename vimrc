@@ -102,7 +102,7 @@ if has("autocmd")
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
     autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd FileType c,cpp inoremap <buffer> {<cr> {<cr>}<c-o>O
+    autocmd FileType c,cpp,go inoremap <buffer> {<cr> {<cr>}<c-o>O
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
 endif
@@ -132,5 +132,11 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 au VimEnter * RainbowParenthesesActivate
 au Syntax * RainbowParenthesesLoadRound
+
+let g:pymode_lint = 0
+
+let g:syntastic_check_on_open = 1
+let g:syntastic_quiet_warnings = 1
+let g:syntastic_check_on_open = 1
 
 " }}}
