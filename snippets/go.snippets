@@ -1,0 +1,9 @@
+snippet /^p (\S+)/ "package ..." r
+package `!p snip.rv=match.group(1)`
+endsnippet
+
+snippet /^main/ "main" r
+func main() {
+	${1}
+}
+endsnippet
