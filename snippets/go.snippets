@@ -7,3 +7,7 @@ func main() {
 	${1}
 }
 endsnippet
+
+snippet /^i (\S+)/ "import ..." r
+import "`!p snip.rv=match.group(1)`"
+endsnippet
