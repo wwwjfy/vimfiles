@@ -11,3 +11,7 @@ endsnippet
 snippet /^i (\S+)/ "import ..." r
 import "`!p snip.rv=match.group(1)`"
 endsnippet
+
+snippet fp
+fmt.Printf("${1}"${2:, })
+endsnippet
