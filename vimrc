@@ -83,6 +83,8 @@ inoremap <Down> <C-o>gj
 
 nnoremap <silent> <leader><space> :noh<cr>
 
+nnoremap <silent> <leader>p m'ggVG"*y''
+
 " Emacs-compatible keys {{{
 cnoremap <C-a> <home>
 cnoremap <C-e> <end>
