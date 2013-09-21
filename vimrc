@@ -142,7 +142,9 @@ let g:syntastic_quiet_warnings = 1
 let g:syntastic_check_on_open = 1
 
 let g:UltiSnipsSnippetDirectories = ["snippets"]
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+let g:yankring_replace_n_pkey = ''
 
 " }}}
