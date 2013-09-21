@@ -146,5 +146,6 @@ let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 let g:yankring_replace_n_pkey = ''
+let g:yankring_history_dir = '$HOME/.vim'
 
 " }}}
