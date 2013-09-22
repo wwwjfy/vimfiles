@@ -104,7 +104,6 @@ if has("autocmd")
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
     autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
-    autocmd FileType c,cpp,go inoremap <buffer> {<cr> {<cr>}<c-o>O
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
 endif
@@ -147,5 +146,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 let g:yankring_replace_n_pkey = ''
 let g:yankring_history_dir = '$HOME/.vim'
+
+let g:delimitMate_expand_cr = 1
 
 " }}}
