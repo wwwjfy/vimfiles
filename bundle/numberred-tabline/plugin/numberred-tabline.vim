@@ -138,14 +138,11 @@ endfunction
 function MyTabLabel(n)
  let buflist = tabpagebuflist(a:n)
  let winnr = tabpagewinnr(a:n)
- let pathname = bufname(buflist[winnr - 1])
- let label = ' '
- for bufnr in buflist
-     if getbufvar(bufnr, '&modified')
-         let label = ' [+]'
-     endif
- endfor
- let label = a:n . ' ' . fnamemodify(pathname, ':t') . label
+ let filename = bufname(buflist[winnr - 1])
+ let label = a:n . ' ' . (filename == '' ? '[No Name]' : fnamemodify(filename, ':t')) . ' '
+ if getbufvar(buflist[winnr - 1], '&modified')
+     let label .= '[+]'
+ endif
  return label
 endfunction
 

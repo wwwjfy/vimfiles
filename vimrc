@@ -37,6 +37,7 @@ set nowrap
 set showmatch
 set showcmd
 set cursorline
+set cursorcolumn
 set colorcolumn=+0
 
 " always show tabline
