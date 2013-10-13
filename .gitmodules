@@ -73,3 +73,6 @@
 [submodule "bundle/YankRing"]
 	path = bundle/YankRing
 	url = git://github.com/vim-scripts/YankRing.vim.git
+[submodule "bundle/numbered-tabline"]
+	path = bundle/numbered-tabline
+	url = git://github.com/wwwjfy/numbered-tabline.git
