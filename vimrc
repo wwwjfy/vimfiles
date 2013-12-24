@@ -44,6 +44,7 @@ set colorcolumn=+0
 set showtabline=2
 
 highlight WhiteSpaceEOL ctermbg=red
+call matchadd("WhiteSpaceEOL", "\\s\\+$")
 
 " avoid "Press ENTER or type command to continue"
 set cmdheight=2
@@ -106,7 +107,6 @@ if has("autocmd")
     autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
-    autocmd BufWinEnter * match WhiteSpaceEOL /\s\+$/
 endif
 " }}}
 " Tweaks {{{
