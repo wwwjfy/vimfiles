@@ -86,9 +86,8 @@ nnoremap <silent> <leader><space> :noh<cr>
 
 nnoremap <silent> <leader>p m'ggVG"*y''
 
-" F2 to save
-nnoremap <F2> :w<cr>
-inoremap <F2> <C-o>:w<cr>
+nnoremap <C-s> :w<cr>
+inoremap <C-s> <C-o>:w<cr>
 
 " Emacs-compatible keys {{{
 cnoremap <C-a> <home>
