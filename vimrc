@@ -145,13 +145,13 @@ au Syntax * RainbowParenthesesLoadRound
 let g:pymode_lint = 0
 
 let g:syntastic_check_on_open = 1
-let g:syntastic_quiet_warnings = 1
+let g:syntastic_quiet_messages = {'level': 'warnings'}
 let g:syntastic_check_on_open = 1
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['python'],
                            \ 'passive_filetypes': []}
 
-let g:UltiSnipsSnippetDirectories = ["snippets"]
+let g:UltiSnipsSnippetDirectories = ["ultisnips"]
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
