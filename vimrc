@@ -86,6 +86,8 @@ nnoremap <silent> <leader><space> :noh<cr>
 
 nnoremap <silent> <leader>p m'ggVG"*y''
 
+nnoremap <silent> <C-t> :tabnew<cr>
+
 nnoremap <C-s> :w<cr>
 inoremap <C-s> <esc>:w<cr>
 
