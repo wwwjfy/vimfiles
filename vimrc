@@ -157,6 +157,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 let g:yankring_replace_n_pkey = ''
 let g:yankring_history_dir = '$HOME/.vim'
+nnoremap <silent> <F2> :YRShow<CR>
 
 let g:delimitMate_expand_cr = 1
 
