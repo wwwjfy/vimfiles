@@ -143,6 +143,10 @@ au VimEnter * RainbowParenthesesActivate
 au Syntax * RainbowParenthesesLoadRound
 
 let g:pymode_lint = 0
+let g:pymode_rope = 0
+let g:pymode_virtualenv = 0
+let g:pymode_run = 0
+let g:pymode_breakpoint = 0
 
 let g:syntastic_check_on_open = 1
 let g:syntastic_quiet_messages = {'level': 'warnings'}
