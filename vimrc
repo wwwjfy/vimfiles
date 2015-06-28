@@ -135,6 +135,8 @@ let indent_guides_guide_size=1
 let indent_guides_start_level=2
 let indent_guides_enable_on_vim_startup=1
 
+let g:airline_powerline_fonts = 1
+
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 au VimEnter * RainbowParenthesesActivate
