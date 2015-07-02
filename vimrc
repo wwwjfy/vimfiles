@@ -104,6 +104,12 @@ inoremap <C-d> <C-o>x
 
 " }}}
 " File Type {{{
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
 if has("autocmd")
     autocmd FileType python set complete+=k~/.vim/autocomplete/pydiction textwidth=79 commentstring=#\ %s
     autocmd FileType python match ErrorMsg '\%>79v.\+'
@@ -114,7 +120,7 @@ if has("autocmd")
     autocmd FileType lisp let b:delimitMate_quotes = "\""
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
-    autocmd BufWritePre * :%s/\s\+$//e
+    autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 endif
 " }}}
 " Tweaks {{{
