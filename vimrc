@@ -114,6 +114,7 @@ if has("autocmd")
     autocmd FileType lisp let b:delimitMate_quotes = "\""
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
+    autocmd BufWritePre * :%s/\s\+$//e
 endif
 " }}}
 " Tweaks {{{
