@@ -172,4 +172,6 @@ nnoremap <silent> <F2> :YRShow<CR>
 
 let g:delimitMate_expand_cr = 1
 
+let g:SimpylFold_fold_docstring = 0
+
 " }}}
