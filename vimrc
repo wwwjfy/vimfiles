@@ -23,6 +23,9 @@ set foldlevel=0
 "set clipboard+=unnamed
 set whichwrap+=<,>,h,l
 " }}}
+" Split {{{
+set splitright
+" }}}
 " Display Preferences {{{
 set background=dark
 colorscheme solarized
