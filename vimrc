@@ -164,6 +164,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['python'],
                            \ 'passive_filetypes': []}
+let g:syntastic_python_python_exec = '/usr/local/bin/python3'
 
 let g:UltiSnipsSnippetDirectories = ["ultisnips"]
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
