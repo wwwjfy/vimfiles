@@ -1,6 +1,3 @@
-if has('python3')
-    silent! python3 1
-endif
 " Basic {{{
 set nocompatible
 set t_Co=256
