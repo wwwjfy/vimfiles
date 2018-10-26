@@ -28,9 +28,6 @@
 [submodule "bundle/vim-fish"]
 	path = bundle/vim-fish
 	url = git://github.com/aliva/vim-fish.git
-[submodule "bundle/ag"]
-	path = bundle/ag
-	url = git://github.com/rking/ag.vim
 [submodule "bundle/rainbow_parentheses"]
 	path = bundle/rainbow_parentheses
 	url = git://github.com/kien/rainbow_parentheses.vim.git
@@ -85,3 +82,6 @@
 [submodule "bundle/vim-go"]
 	path = bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
+[submodule "bundle/ack.vim"]
+	path = bundle/ack.vim
+	url = https://github.com/mileszs/ack.vim

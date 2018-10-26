@@ -178,4 +178,8 @@ let g:delimitMate_expand_cr = 1
 
 let g:SimpylFold_fold_docstring = 0
 
+if executable('rg')
+  let g:ackprg = 'rg --vimgrep'
+endif
+
 " }}}
