@@ -119,7 +119,7 @@ if has("autocmd")
     autocmd FileType python nnoremap gd /\<\(def\\|class\) <C-r><C-w>\><cr>
     autocmd FileType make set noexpandtab
     autocmd FileType gitconfig set noexpandtab
-    autocmd FileType objc,coffee,html,css,scss,ruby,eruby set tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd FileType objc,coffee,html,css,scss,ruby,eruby,yaml set tabstop=2 softtabstop=2 shiftwidth=2
     autocmd FileType lisp let b:delimitMate_quotes = "\""
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
@@ -146,8 +146,6 @@ let indent_guides_start_level=2
 let indent_guides_enable_on_vim_startup=1
 
 let g:airline_powerline_fonts = 1
-
-set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 au VimEnter * RainbowParenthesesActivate
 au Syntax * RainbowParenthesesLoadRound
@@ -181,5 +179,8 @@ let g:SimpylFold_fold_docstring = 0
 if executable('rg')
   let g:ackprg = 'rg --vimgrep'
 endif
+
+set rtp+=/usr/local/opt/fzf
+nmap <C-p> :Files<cr>
 
 " }}}
