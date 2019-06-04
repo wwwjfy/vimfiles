@@ -34,12 +34,6 @@
 [submodule "bundle/delimitMate"]
 	path = bundle/delimitMate
 	url = git://github.com/Raimondi/delimitMate.git
-[submodule "bundle/gundo.vim"]
-	path = bundle/gundo.vim
-	url = git://github.com/sjl/gundo.vim.git
-[submodule "bundle/go-vim"]
-	path = bundle/go-vim
-	url = git://github.com/uggedal/go-vim.git
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
@@ -88,3 +82,6 @@
 [submodule "bundle/coc.nvim"]
 	path = bundle/coc.nvim
 	url = https://github.com/neoclide/coc.nvim
+[submodule "bundle/undotree"]
+	path = bundle/undotree
+	url = https://github.com/mbbill/undotree
