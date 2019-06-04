@@ -123,6 +123,7 @@ if has("autocmd")
     autocmd FileType lisp let b:delimitMate_quotes = "\""
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
+    autocmd FileType go nmap <silent> gd <Plug>(coc-definition)
     autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 endif
 " }}}
@@ -182,5 +183,8 @@ endif
 
 set rtp+=/usr/local/opt/fzf
 nmap <C-p> :Files<cr>
+
+"let g:go_def_mode='gopls'
+let g:go_def_mapping_enabled = 0
 
 " }}}
