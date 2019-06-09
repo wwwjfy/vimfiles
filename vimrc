@@ -1,13 +1,9 @@
 " Basic {{{
-set nocompatible
-set t_Co=256
-
-call pathogen#infect()
-
 filetype plugin indent on
 syntax on
 set encoding=utf-8
 set shell=/bin/bash
+set updatetime=300
 
 " Input Mode {{{
 let mapleader=","
@@ -23,12 +19,12 @@ set foldlevel=0
 "set clipboard+=unnamed
 set whichwrap+=<,>,h,l
 " }}}
+
 " Split {{{
 set splitright
 " }}}
 " Display Preferences {{{
 set background=dark
-colorscheme solarized
 set scrolloff=4
 set ruler
 set number
@@ -56,6 +52,7 @@ set matchtime=2
 set laststatus=2
 " set statusline=%f%y%m%r%=%-14.(%l,%c%V%)\ %P
 " }}}
+
 " Command Mode {{{
 set wildmenu
 set wildmode=longest,list
@@ -134,10 +131,36 @@ cnoremap w!! %!sudo tee > /dev/null %
 
 " }}}
 " plugin configurations {{{
+call plug#begin()
 
-let g:vimwiki_list = [
-\  {'path': '$HOME/Documents/vimwiki', 'path_html': '$HOME/Documents/vimwiki/html'}
-\]
+Plug 'ervandew/supertab'
+Plug 'git://repo.or.cz/vcscommand'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'scrooloose/nerdcommenter'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'bling/vim-airline'
+Plug 'tmhedberg/SimpylFold'
+Plug 'altercation/vim-colors-solarized'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'wwwjfy/numbered-tabline'
+Plug 'mileszs/ack.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+Plug 'mbbill/undotree'
+Plug 'jlanzarotta/bufexplorer'
+
+" FileType
+Plug 'aliva/vim-fish'
+Plug 'fatih/vim-go'
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+Plug 'juliosueiras/vim-terraform-completion'
+
+call plug#end()
+
+colorscheme solarized
 
 " indent guides color setting
 hi IndentGuidesOdd ctermbg=black
@@ -161,7 +184,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_quiet_messages = {'level': 'warnings'}
 let g:syntastic_check_on_open = 1
 let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['python'],
+                           \ 'active_filetypes': ['python', 'terraform'],
                            \ 'passive_filetypes': []}
 let g:syntastic_python_checkers = ['pyflakes']
 
@@ -186,5 +209,10 @@ nmap <C-p> :Files<cr>
 
 "let g:go_def_mode='gopls'
 let g:go_def_mapping_enabled = 0
+
+let g:terraform_completion_keys = 1
+let g:terraform_align = 1
+let g:terraform_fmt_on_save = 1
+let g:terraform_registry_module_completion = 0
 
 " }}}
