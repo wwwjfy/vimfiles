@@ -120,7 +120,10 @@ if has("autocmd")
     autocmd FileType lisp let b:delimitMate_quotes = "\""
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
-    autocmd FileType go nmap <silent> gd <Plug>(coc-definition)
+    autocmd FileType go nmap <silent> gdd :call CocAction('jumpDefinition')<CR>
+    autocmd FileType go nmap <silent> gds :call CocAction('jumpDefinition', 'vsplit')<CR>
+    autocmd FileType go nmap <silent> gdt :call CocAction('jumpDefinition', 'tabe')<CR>
+    autocmd FileType go nmap <silent> cn <Plug>(coc-diagnostic-next)
     autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 endif
 " }}}
@@ -157,6 +160,7 @@ Plug 'fatih/vim-go'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
+Plug 'keith/swift.vim'
 
 call plug#end()
 
@@ -203,6 +207,9 @@ let g:SimpylFold_fold_docstring = 0
 if executable('rg')
   let g:ackprg = 'rg --vimgrep'
 endif
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a. :Ack!<Space>
+nnoremap <Leader>ad :Ack!<Space><Space>%:p:h<left><left><left><left><left><left>
 
 set rtp+=/usr/local/opt/fzf
 nmap <C-p> :Files<cr>
