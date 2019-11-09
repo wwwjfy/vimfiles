@@ -16,7 +16,6 @@ set autoindent
 set backspace=indent,eol,start
 set foldmethod=marker
 set foldlevel=0
-"set clipboard+=unnamed
 set whichwrap+=<,>,h,l
 " }}}
 
@@ -50,7 +49,6 @@ set cmdheight=2
 
 set matchtime=2
 set laststatus=2
-" set statusline=%f%y%m%r%=%-14.(%l,%c%V%)\ %P
 " }}}
 
 " Command Mode {{{
@@ -143,7 +141,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'tmhedberg/SimpylFold'
 Plug 'altercation/vim-colors-solarized'
 Plug 'kien/rainbow_parentheses.vim'
