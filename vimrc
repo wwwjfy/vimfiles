@@ -135,7 +135,6 @@ cnoremap w!! %!sudo tee > /dev/null %
 call plug#begin()
 
 Plug 'ervandew/supertab'
-Plug 'git://repo.or.cz/vcscommand'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kien/rainbow_parentheses.vim'
@@ -144,13 +143,14 @@ Plug 'vim-scripts/YankRing.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'tmhedberg/SimpylFold'
 Plug 'altercation/vim-colors-solarized'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'wwwjfy/numbered-tabline'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 Plug 'mbbill/undotree'
 Plug 'jlanzarotta/bufexplorer'
+Plug 'ruanyl/vim-gh-line'
+Plug 'tpope/vim-fugitive'
 
 " FileType
 Plug 'aliva/vim-fish'
