@@ -122,6 +122,7 @@ if has("autocmd")
     autocmd FileType go nmap <silent> gds :call CocAction('jumpDefinition', 'vsplit')<CR>
     autocmd FileType go nmap <silent> gdt :call CocAction('jumpDefinition', 'tabe')<CR>
     autocmd FileType go nmap <silent> cn <Plug>(coc-diagnostic-next)
+    autocmd FileType go inoremap <silent><expr> <c-space> coc#refresh()
     autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 endif
 " }}}
@@ -172,6 +173,7 @@ let indent_guides_start_level=2
 let indent_guides_enable_on_vim_startup=1
 
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled = 0
 
 au VimEnter * RainbowParenthesesActivate
 au Syntax * RainbowParenthesesLoadRound
