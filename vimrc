@@ -139,7 +139,7 @@ Plug 'ervandew/supertab'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kien/rainbow_parentheses.vim'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'tmhedberg/SimpylFold'
@@ -160,6 +160,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'keith/swift.vim'
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
@@ -211,8 +212,11 @@ cnoreabbrev Ack Ack!
 nnoremap <Leader>a. :Ack!<Space>
 nnoremap <Leader>ad :Ack!<Space><Space>%:p:h<left><left><left><left><left><left>
 
+let g:AutoPairsShortcutToggle = ''
+
 set rtp+=/usr/local/opt/fzf
 nmap <C-p> :Files<cr>
+nnoremap <M-p> :Files %:h<cr>
 
 "let g:go_def_mode='gopls'
 let g:go_def_mapping_enabled = 0
@@ -222,4 +226,8 @@ let g:terraform_align = 1
 let g:terraform_fmt_on_save = 1
 let g:terraform_registry_module_completion = 0
 
+let g:rustfmt_autosave = 1
+
+command! -bang CurrentDirFiles call fzf#vim#files('%:h', <bang>0)
+let g:fzf_preview_window = ''
 " }}}
