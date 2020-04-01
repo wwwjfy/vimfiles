@@ -4,6 +4,11 @@
             "command": "gopls",
             "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
             "filetypes": ["go"]
+        },
+        "rust": {
+          "command": "rust-analyzer",
+          "filetypes": ["rust"],
+          "rootPatterns": ["Cargo.toml"]
         }
     },
     "suggest.autoTrigger": "trigger"
