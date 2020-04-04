@@ -218,7 +218,7 @@ set rtp+=/usr/local/opt/fzf
 nmap <C-p> :Files<cr>
 nnoremap <M-p> :Files %:h<cr>
 
-"let g:go_def_mode='gopls'
+let g:go_gopls_options = ['-remote=auto']
 let g:go_def_mapping_enabled = 0
 
 let g:terraform_completion_keys = 1
