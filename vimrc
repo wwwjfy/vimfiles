@@ -121,8 +121,8 @@ if has("autocmd")
     autocmd FileType go nmap <silent> gdd :call CocAction('jumpDefinition')<CR>
     autocmd FileType go nmap <silent> gds :call CocAction('jumpDefinition', 'vsplit')<CR>
     autocmd FileType go nmap <silent> gdt :call CocAction('jumpDefinition', 'tabe')<CR>
-    autocmd FileType go nmap <silent> cn <Plug>(coc-diagnostic-next)
     autocmd FileType go inoremap <silent><expr> <c-space> coc#refresh()
+    autocmd FileType go nnoremap <C-w>x <C-w>v:GoAlternate<cr>
     autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 endif
 " }}}
@@ -228,6 +228,10 @@ let g:terraform_registry_module_completion = 0
 
 let g:rustfmt_autosave = 1
 
-command! -bang CurrentDirFiles call fzf#vim#files('%:h', <bang>0)
-let g:fzf_preview_window = ''
+inoremap <silent><expr> <c-space> coc#refresh()
+nmap <silent> cn <Plug>(coc-diagnostic-next)
+
+let g:SuperTabMappingForward = '<s-tab>'
+let g:SuperTabMappingBackward = '<tab>'
+
 " }}}
