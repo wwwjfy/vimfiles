@@ -121,7 +121,6 @@ if has("autocmd")
     autocmd FileType go nmap <silent> gdd :call CocAction('jumpDefinition')<CR>
     autocmd FileType go nmap <silent> gds :call CocAction('jumpDefinition', 'vsplit')<CR>
     autocmd FileType go nmap <silent> gdt :call CocAction('jumpDefinition', 'tabe')<CR>
-    autocmd FileType go inoremap <silent><expr> <c-space> coc#refresh()
     autocmd FileType go nnoremap <C-w>x <C-w>v:GoAlternate<cr>
     autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
 endif
@@ -147,7 +146,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'wwwjfy/numbered-tabline'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/fzf.vim'
-Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mbbill/undotree'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'ruanyl/vim-gh-line'
@@ -158,7 +157,6 @@ Plug 'aliva/vim-fish'
 Plug 'fatih/vim-go'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
-Plug 'juliosueiras/vim-terraform-completion'
 Plug 'keith/swift.vim'
 Plug 'rust-lang/rust.vim'
 
@@ -217,9 +215,11 @@ let g:AutoPairsShortcutToggle = ''
 set rtp+=/usr/local/opt/fzf
 nmap <C-p> :Files<cr>
 nnoremap <M-p> :Files %:h<cr>
+let g:fzf_preview_window = ''
 
-let g:go_gopls_options = ['-remote=auto']
 let g:go_def_mapping_enabled = 0
+let g:go_imports_autosave = 0
+let g:go_gopls_enabled = 0
 
 let g:terraform_completion_keys = 1
 let g:terraform_align = 1

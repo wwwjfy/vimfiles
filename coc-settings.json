@@ -2,9 +2,10 @@
     "languageserver": {
         "golang": {
             "command": "gopls",
-            "args": ["-remote=auto"],
-            "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-            "filetypes": ["go"]
+            "rootPatterns": ["go.mod", "grabkit.yaml", "doc.go", "ci.json", "main.go"],
+            "filetypes": ["go"],
+            "disableWorkspaceFolders": true,
+            "progressOnInitialization": true
         },
         "rust": {
           "command": "rust-analyzer",
