@@ -3,9 +3,7 @@
         "golang": {
             "command": "gopls",
             "rootPatterns": ["go.mod", "grabkit.yaml", "doc.go", "ci.json", "main.go"],
-            "filetypes": ["go"],
-            "disableWorkspaceFolders": true,
-            "progressOnInitialization": true
+            "filetypes": ["go"]
         },
         "rust": {
           "command": "rust-analyzer",
@@ -13,5 +11,7 @@
           "rootPatterns": ["Cargo.toml"]
         }
     },
-    "suggest.autoTrigger": "trigger"
+    "suggest.autoTrigger": "trigger",
+    "workspace.bottomUpFiletypes": ["go"],
+    "workspace.ignoredFiletypes": ["proto"]
 }
