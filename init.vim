@@ -273,6 +273,9 @@ local on_attach = function(client, bufnr)
   local opts = { noremap=true, silent=true }
 
   buf_set_keymap('n', 'gdd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gdt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gds', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>vsplit | lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'cn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
   require("lsp_signature").on_attach({
