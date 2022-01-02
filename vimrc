@@ -1,4 +1,5 @@
 " Basic {{{
+let &t_ut=''
 filetype plugin indent on
 syntax on
 set encoding=utf-8
@@ -23,7 +24,7 @@ set whichwrap+=<,>,h,l
 set splitright
 " }}}
 " Display Preferences {{{
-set background=dark
+set background=light
 set scrolloff=4
 set ruler
 set number
@@ -83,6 +84,7 @@ inoremap <Down> <C-o>gj
 nnoremap <silent> <leader><space> :noh<cr>
 
 nnoremap <silent> <leader>p m'ggVG"*y''
+nnoremap <silent> <leader>bl :set background=light<cr>
 
 nnoremap <silent> <C-t> :tabnew<cr>
 
@@ -118,11 +120,13 @@ if has("autocmd")
     autocmd FileType lisp let b:delimitMate_quotes = "\""
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
-    autocmd FileType go nmap <silent> gdd :call CocAction('jumpDefinition')<CR>
-    autocmd FileType go nmap <silent> gds :call CocAction('jumpDefinition', 'vsplit')<CR>
-    autocmd FileType go nmap <silent> gdt :call CocAction('jumpDefinition', 'tabe')<CR>
+    autocmd FileType go,typescriptreact,ruby nmap <silent> gdd :call CocAction('jumpDefinition')<CR>
+    autocmd FileType go,typescriptreact,ruby nmap <silent> gds :call CocAction('jumpDefinition', 'vsplit')<CR>
+    autocmd FileType go,typescriptreact,ruby nmap <silent> gdt :call CocAction('jumpDefinition', 'tabe')<CR>
     autocmd FileType go nnoremap <C-w>x <C-w>v:GoAlternate<cr>
     autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
+    autocmd FileType beancount nnoremap <leader>. :AlignCommodity<CR>
+    autocmd FileType beancount vnoremap <leader>. :AlignCommodity<CR>
 endif
 " }}}
 " Tweaks {{{
@@ -151,6 +155,7 @@ Plug 'mbbill/undotree'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'ruanyl/vim-gh-line'
 Plug 'tpope/vim-fugitive'
+Plug 'nathangrigg/vim-beancount'
 
 " FileType
 Plug 'aliva/vim-fish'
@@ -159,6 +164,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'keith/swift.vim'
 Plug 'rust-lang/rust.vim'
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 
@@ -234,4 +240,17 @@ nmap <silent> cn <Plug>(coc-diagnostic-next)
 let g:SuperTabMappingForward = '<s-tab>'
 let g:SuperTabMappingBackward = '<tab>'
 
+" }}}
+" " Tab {{{
+function! s:PreviousTab_StoreState()
+    let s:tab_current = tabpagenr()
+    let s:tab_last = tabpagenr('$')
+endfunction
+function! s:PreviousTab_TabClosed()
+    if s:tab_current > 1 && s:tab_current < s:tab_last
+        exec 'tabp'
+    endif
+endfunction
+autocmd TabEnter,TabLeave * call s:PreviousTab_StoreState()
+autocmd TabClosed * call s:PreviousTab_TabClosed()
 " }}}
