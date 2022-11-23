@@ -5,6 +5,7 @@ syntax on
 set encoding=utf-8
 set shell=/bin/bash
 set updatetime=300
+set mouse=
 
 " Input Mode {{{
 let mapleader=","
@@ -120,7 +121,6 @@ if has("autocmd")
     autocmd FileType lisp let b:delimitMate_quotes = "\""
     autocmd BufNewFile,BufRead *.md set filetype=markdown
     autocmd BufNewFile,BufRead *.go set filetype=go
-    autocmd FileType go nnoremap <C-w>x <C-w>v:GoAlternate<cr>
     autocmd BufWritePre *.py :call <SID>StripTrailingWhitespaces()
     autocmd FileType beancount nnoremap <leader>. :AlignCommodity<CR>
     autocmd FileType beancount vnoremap <leader>. :AlignCommodity<CR>
@@ -140,7 +140,9 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'windwp/nvim-autopairs'
-Plug 'vim-scripts/YankRing.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'gbprod/yanky.nvim'
 Plug 'vim-airline/vim-airline'
 Plug 'tmhedberg/SimpylFold'
 Plug 'altercation/vim-colors-solarized'
@@ -155,7 +157,9 @@ Plug 'nathangrigg/vim-beancount'
 
 " FileType
 Plug 'aliva/vim-fish'
-Plug 'fatih/vim-go'
+Plug 'ray-x/go.nvim'
+Plug 'ray-x/guihua.lua'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'keith/swift.vim'
@@ -204,7 +208,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 let g:yankring_replace_n_pkey = ''
 let g:yankring_history_dir = '$HOME/.vim'
-nnoremap <silent> <F2> :YRShow<CR>
+nnoremap <silent> <F2> :Telescope yank_history<CR>
 
 let g:delimitMate_expand_cr = 1
 
@@ -217,16 +221,14 @@ cnoreabbrev Ack Ack!
 nnoremap <Leader>a. :Ack!<Space>
 nnoremap <Leader>ad :Ack!<Space><Space>%:p:h<left><left><left><left><left><left>
 
-"let g:AutoPairsShortcutToggle = ''
-
-set rtp+=/usr/local/opt/fzf
+if system("uname -m") == "arm64\n"
+    set rtp+=/opt/homebrew/opt/fzf
+else
+    set rtp+=/usr/local/opt/fzf
+endif
 nmap <C-p> :Files<cr>
 nnoremap <M-p> :Files %:h<cr>
 let g:fzf_preview_window = ''
-
-let g:go_def_mapping_enabled = 0
-let g:go_imports_autosave = 0
-let g:go_gopls_enabled = 0
 
 let g:terraform_completion_keys = 1
 let g:terraform_align = 1
@@ -237,6 +239,31 @@ let g:rustfmt_autosave = 1
 
 let g:SuperTabMappingForward = '<s-tab>'
 let g:SuperTabMappingBackward = '<tab>'
+
+" go.nvim {{{
+lua <<EOF
+require("telescope").load_extension("yank_history")
+require("yanky").setup({
+  picker = {
+    select = {
+      action = nil, -- nil to use default put action
+    },
+    telescope = {
+      mappings = nil, -- nil to use default mappings
+    },
+  },
+})
+require('go').setup({
+    comment_placeholder = '',
+    max_line_len = 200,
+    lsp_inlay_hints = {
+        enable = true,
+    },
+})
+EOF
+autocmd BufWritePre *.go :silent! lua require('go.format').goimport()
+autocmd FileType go nnoremap <C-w>x :GoAltV<cr>
+" }}}
 
 lua <<EOF
 require('nvim-autopairs').setup({
@@ -274,7 +301,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gdd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gdt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'gds', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>vsplit | lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>tab split | lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'cn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 
   require("lsp_signature").on_attach({
@@ -285,9 +312,11 @@ local on_attach = function(client, bufnr)
     })
 end
 
+local util = require 'lspconfig.util'
 
 nvim_lsp.gopls.setup{
   on_attach = on_attach,
+  root_dir = util.root_pattern("go.mod", "doc.go")
 }
 
 local cmp = require('cmp')
