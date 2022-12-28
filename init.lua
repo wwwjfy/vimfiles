@@ -6,7 +6,7 @@ vim.g.maplocalleader = '\\'
 vim.o.expandtab = true
 vim.o.foldmethod = 'marker'
 vim.o.whichwrap = vim.o.whichwrap .. '<,>,h,l'
-vim.o.splitright = 'splitright'
+vim.o.splitright = true
 -- }}}
 
 -- Display {{{
@@ -65,7 +65,7 @@ vim.keymap.set('i', '<C-s>', '<esc>:w<cr>', { noremap = true })
 vim.keymap.set('c', '<C-a>', '<home>', { noremap = true })
 vim.keymap.set('c', '<C-e>', '<end>', { noremap = true })
 vim.keymap.set('i', '<C-a>', '<C-o>^', { noremap = true })
-vim.keymap.set('i', '<C-a>', '<C-o>$', { noremap = true })
+vim.keymap.set('i', '<C-e>', '<C-o>$', { noremap = true })
 vim.keymap.set('i', '<C-k>', '<C-o>D', { noremap = true })
 vim.keymap.set('i', '<C-b>', '<C-o>h', { noremap = true })
 vim.keymap.set('i', '<C-f>', '<C-o>l', { noremap = true })
@@ -140,6 +140,13 @@ require('packer').startup(function(use)
     use 'nvim-lua/plenary.nvim'
 
     use 'nvim-telescope/telescope.nvim'
+    vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = 'Find recently opened files' })
+    vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers, { desc = 'Find in buffers' })
+    vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, { desc = 'Find files' })
+    vim.keymap.set('n', '<M-p>', function()
+        require('telescope.builtin').find_files({ search_dirs = {'%:h'} })
+    end, { desc = 'Find files from the folder of current file' })
+
     use 'gbprod/yanky.nvim'
     vim.keymap.set('n', '<F2>', ':Telescope yank_history<cr>', { silent = true, noremap = true })
     require("telescope").load_extension("yank_history")
@@ -163,7 +170,6 @@ require('packer').startup(function(use)
     use 'tmhedberg/SimpylFold'
     vim.g.SimpylFold_fold_docstring = 0
 
-    use 'altercation/vim-colors-solarized'
     use 'wwwjfy/numbered-tabline'
 
     use 'mileszs/ack.vim'
@@ -172,16 +178,6 @@ require('packer').startup(function(use)
     end
     vim.keymap.set('n', '<Leader>a.', ':Ack!<Space>', { noremap = true })
     vim.keymap.set('n', '<Leader>ad', ':Ack!<Space><Space>%:p:h<left><left><left><left><left><left>', { noremap = true })
-
-    use 'junegunn/fzf.vim'
-    if vim.fn['system']("uname -m") == "arm64\n" then
-        vim.opt.rtp:append('/opt/homebrew/opt/fzf')
-    else
-        vim.opt.rtp:append('/usr/local/opt/fzf')
-    end
-    vim.keymap.set('n', '<C-p>', ':Files<cr>')
-    vim.keymap.set('n', '<M-p>', ':Files %:h<cr>', { noremap = true })
-    vim.g.fzf_preview_window = ''
 
     use 'mbbill/undotree'
     use 'jlanzarotta/bufexplorer'
@@ -229,7 +225,13 @@ require('packer').startup(function(use)
     use 'leafgarland/typescript-vim'
 
 -- LSP {{{
-    use 'neovim/nvim-lspconfig'
+    use {
+        'neovim/nvim-lspconfig',
+        requires = {
+            'j-hui/fidget.nvim',
+        },
+    }
+
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/nvim-cmp'
     use 'ray-x/lsp_signature.nvim'
@@ -245,11 +247,13 @@ require('packer').startup(function(use)
 
       local opts = { noremap=true, silent=true }
 
-      buf_set_keymap('n', 'gdd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+      buf_set_keymap('n', 'gdd', vim.lsp.buf.definition, opts)
       buf_set_keymap('n', 'gdt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', opts)
       buf_set_keymap('n', 'gds', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', opts)
       buf_set_keymap('n', 'gi', '<cmd>tab split | lua vim.lsp.buf.implementation()<CR>', opts)
-      buf_set_keymap('n', 'cn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+      buf_set_keymap('n', 'gr', vim.lsp.buf.implementation, opts)
+      buf_set_keymap('n', 'cn', vim.diagnostic.goto_next, opts)
+      buf_set_keymap('K', vim.lsp.buf.hover)
 
       require("lsp_signature").on_attach({
           bind = true, -- This is mandatory, otherwise border config won't get registered.
@@ -265,6 +269,8 @@ require('packer').startup(function(use)
       on_attach = on_attach,
       root_dir = util.root_pattern("go.mod", "doc.go")
     }
+
+    require('fidget').setup()
 
     local cmp = require('cmp')
     cmp.setup {
