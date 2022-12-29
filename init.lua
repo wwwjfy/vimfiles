@@ -239,21 +239,27 @@ require('packer').startup(function(use)
     local nvim_lsp = require('lspconfig')
 
     local on_attach = function(client, bufnr)
-      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-      local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
       -- Enable completion triggered by <c-x><c-o>
-      buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-      local opts = { noremap=true, silent=true }
+      local opts = { noremap=true, silent=true, buffer = bufnr }
 
-      buf_set_keymap('n', 'gdd', vim.lsp.buf.definition, opts)
-      buf_set_keymap('n', 'gdt', '<cmd>tab split | lua vim.lsp.buf.definition()<CR>', opts)
-      buf_set_keymap('n', 'gds', '<cmd>vsplit | lua vim.lsp.buf.definition()<CR>', opts)
-      buf_set_keymap('n', 'gi', '<cmd>tab split | lua vim.lsp.buf.implementation()<CR>', opts)
-      buf_set_keymap('n', 'gr', vim.lsp.buf.implementation, opts)
-      buf_set_keymap('n', 'cn', vim.diagnostic.goto_next, opts)
-      buf_set_keymap('K', vim.lsp.buf.hover)
+      vim.keymap.set('n', 'gdd', vim.lsp.buf.definition, opts)
+      vim.keymap.set('n', 'gdt', function()
+          vim.cmd('tab split')
+          vim.lsp.buf.definition()
+      end, opts)
+      vim.keymap.set('n', 'gds', function()
+          vim.cmd('vsplit')
+          vim.lsp.buf.definition()
+      end, opts)
+      vim.keymap.set('n', 'gi', function()
+          vim.cmd('tab split')
+          vim.lsp.buf.implementation()
+      end, opts)
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      vim.keymap.set('n', 'cn', vim.diagnostic.goto_next, opts)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, ops)
 
       require("lsp_signature").on_attach({
           bind = true, -- This is mandatory, otherwise border config won't get registered.
