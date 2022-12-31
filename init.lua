@@ -96,6 +96,12 @@ vim.api.nvim_create_autocmd('FileType', {
         vim.keymap.set({'n', 'v'}, '<leader>.', ':AlignCommodity<CR>', { noremap = true })
     end
 })
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {'qf'},
+    callback = function(args)
+        vim.keymap.set('n', 't', '<C-W><Enter><C-W>T', { noremap = true, buffer = true, desc = 'open selected line in a new tab' })
+    end
+})
 -- }}}
 
 -- Plugins {{{
@@ -141,7 +147,7 @@ require('packer').startup(function(use)
 
     use 'nvim-telescope/telescope.nvim'
     vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = 'Find recently opened files' })
-    vim.keymap.set('n', '<leader>b', require('telescope.builtin').buffers, { desc = 'Find in buffers' })
+    vim.keymap.set('n', '<leader>bf', require('telescope.builtin').buffers, { desc = 'Find in buffers' })
     vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, { desc = 'Find files' })
     vim.keymap.set('n', '<M-p>', function()
         require('telescope.builtin').find_files({ search_dirs = {'%:h'} })
