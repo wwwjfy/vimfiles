@@ -143,6 +143,11 @@ require('packer').startup(function(use)
         fast_wrap = {},
     })
 
+    use 'nvim-tree/nvim-tree.lua'
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+    require("nvim-tree").setup()
+
     use 'nvim-lua/plenary.nvim'
 
     use 'nvim-telescope/telescope.nvim'
@@ -222,13 +227,14 @@ require('packer').startup(function(use)
     vim.g.terraform_fmt_on_save = 1
     vim.g.terraform_registry_module_completion = 0
 
-    --use 'vim-syntastic/syntastic'
+-- {{{ File Types
     use 'keith/swift.vim'
 
     use 'rust-lang/rust.vim'
     vim.g.rustfmt_autosave = 1
 
     use 'leafgarland/typescript-vim'
+-- }}}
 
 -- LSP {{{
     use {
