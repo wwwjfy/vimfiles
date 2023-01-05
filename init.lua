@@ -1,4 +1,5 @@
 -- Basic {{{
+vim.o.shell = '/bin/bash'
 vim.o.updatetime = 300
 vim.o.mouse = ''
 vim.g.mapleader = ','
