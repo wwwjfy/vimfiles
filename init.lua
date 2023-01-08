@@ -154,10 +154,16 @@ require('packer').startup(function(use)
     use 'nvim-telescope/telescope.nvim'
     vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = 'Find recently opened files' })
     vim.keymap.set('n', '<leader>bf', require('telescope.builtin').buffers, { desc = 'Find in buffers' })
-    vim.keymap.set('n', '<C-p>', require('telescope.builtin').find_files, { desc = 'Find files' })
-    vim.keymap.set('n', '<M-p>', function()
-        require('telescope.builtin').find_files({ search_dirs = {'%:h'} })
-    end, { desc = 'Find files from the folder of current file' })
+
+    use 'junegunn/fzf.vim'
+    if vim.fn['system']("uname -m") == "arm64\n" then
+        vim.opt.rtp:append('/opt/homebrew/opt/fzf')
+    else
+        vim.opt.rtp:append('/usr/local/opt/fzf')
+    end
+    vim.keymap.set('n', '<C-p>', ':Files<cr>')
+    vim.keymap.set('n', '<M-p>', ':Files %:h<cr>', { noremap = true })
+    vim.g.fzf_preview_window = ''
 
     use 'gbprod/yanky.nvim'
     vim.keymap.set('n', '<F2>', ':Telescope yank_history<cr>', { silent = true, noremap = true })
