@@ -256,6 +256,7 @@ require('packer').startup(function(use)
     use 'ray-x/lsp_signature.nvim'
 
     local nvim_lsp = require('lspconfig')
+    local lsp_handlers = require('lsp_handlers')
 
     local on_attach = function(client, bufnr)
       -- Enable completion triggered by <c-x><c-o>
@@ -274,7 +275,7 @@ require('packer').startup(function(use)
       end, opts)
       vim.keymap.set('n', 'gi', function()
           vim.cmd('tab split')
-          vim.lsp.buf.implementation()
+          lsp_handlers.goto_implementations()
       end, opts)
       vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
       vim.keymap.set('n', 'cn', vim.diagnostic.goto_next, opts)
