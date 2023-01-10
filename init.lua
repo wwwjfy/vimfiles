@@ -208,9 +208,7 @@ require('packer').startup(function(use)
     require('go').setup({
         comment_placeholder = '',
         max_line_len = 200,
-        lsp_inlay_hints = {
-            enable = true,
-        },
+        goimport = 'golines',
     })
     vim.api.nvim_create_autocmd('BufWritePre', {
         pattern = '*.go',
@@ -227,6 +225,50 @@ require('packer').startup(function(use)
 
     use 'ray-x/guihua.lua'
     use 'nvim-treesitter/nvim-treesitter'
+
+    use 'simrat39/inlay-hints.nvim'
+    require("inlay-hints").setup {
+        -- renderer to use
+        -- possible options are dynamic, eol, virtline and custom
+        -- renderer = "inlay-hints/render/dynamic",
+        renderer = "inlay-hints/render/eol",
+
+        hints = {
+          parameter = {
+            show = true,
+            highlight = "whitespace",
+          },
+          type = {
+            show = true,
+            highlight = "Whitespace",
+          },
+        },
+
+        -- Only show inlay hints for the current line
+        only_current_line = false,
+
+        eol = {
+          -- whether to align to the extreme right or not
+          right_align = false,
+
+          -- padding from the right if right_align is true
+          right_align_padding = 7,
+
+          parameter = {
+            separator = ", ",
+            format = function(hints)
+              return string.format(" <- (%s)", hints)
+            end,
+          },
+
+          type = {
+            separator = ", ",
+            format = function(hints)
+              return string.format(" => %s", hints)
+            end,
+          },
+        },
+      }
 
     use 'hashivim/vim-terraform'
     vim.g.terraform_completion_keys = 1
@@ -286,14 +328,28 @@ require('packer').startup(function(use)
           handler_opts = {
             border = "rounded"
           }
-        })
+      })
+      require("inlay-hints").on_attach(client, bufnr)
     end
 
     local util = require 'lspconfig.util'
 
     nvim_lsp.gopls.setup{
-      on_attach = on_attach,
-      root_dir = util.root_pattern("go.mod", "doc.go")
+        on_attach = on_attach,
+        root_dir = util.root_pattern("go.mod", "doc.go"),
+        settings = {
+            gopls = {
+                hints = {
+                    assignVariableTypes = true,
+                    compositeLiteralFields = true,
+                    compositeLiteralTypes = true,
+                    constantValues = true,
+                    functionTypeParameters = true,
+                    parameterNames = true,
+                    rangeVariableTypes = true,
+                },
+            },
+        },
     }
 
     require('fidget').setup()
