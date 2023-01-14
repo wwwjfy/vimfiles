@@ -121,6 +121,7 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup(function(use)
+    use 'wbthomason/packer.nvim'
     use 'ervandew/supertab'
     vim.g.SuperTabMappingForward = '<s-tab>'
     vim.g.SuperTabMappingBackward = '<tab>'
@@ -232,13 +233,22 @@ require('packer').startup(function(use)
     use 'ray-x/guihua.lua'
     use 'nvim-treesitter/nvim-treesitter'
 
+    use 'sindrets/diffview.nvim'
+    require('diffview').setup({
+        view = {
+            merge_tool = {
+                layout = 'diff4_mixed',
+            }
+        }
+    })
+
+-- {{{ File Types
     use 'hashivim/vim-terraform'
     vim.g.terraform_completion_keys = 1
     vim.g.terraform_align = 1
     vim.g.terraform_fmt_on_save = 1
     vim.g.terraform_registry_module_completion = 0
 
--- {{{ File Types
     use 'keith/swift.vim'
 
     use 'rust-lang/rust.vim'
