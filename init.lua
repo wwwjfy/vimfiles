@@ -149,19 +149,9 @@ require('lazy').setup({
     'folke/tokyonight.nvim',
     {
         'scrooloose/nerdcommenter',
-        keys = "<leader>c<space>",
-    },
-
-    {
-        'kien/rainbow_parentheses.vim',
-        config = function()
-            vim.api.nvim_create_autocmd('VimEnter', {
-                command = 'RainbowParenthesesToggle'
-            })
-            vim.api.nvim_create_autocmd('Syntax', {
-                command = 'RainbowParenthesesLoadRound'
-            })
-        end,
+        keys = {
+            {"<leader>c<space>", 'NERDCommenterToggle', {"n", "v"}},
+        },
     },
 
     {
@@ -290,7 +280,21 @@ require('lazy').setup({
     },
 
     'ray-x/guihua.lua',
-    'nvim-treesitter/nvim-treesitter',
+    {
+        'nvim-treesitter/nvim-treesitter',
+        dependencies = {'p00f/nvim-ts-rainbow'},
+        config = function()
+            require('nvim-treesitter.configs').setup({
+                ensure_installed = { "go" },
+                highlight = {
+                    enable = true,
+                },
+                rainbow = {
+                    enable = true,
+                },
+            })
+        end
+    },
 
     {
         'sindrets/diffview.nvim',
