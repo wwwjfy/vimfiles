@@ -112,252 +112,325 @@ vim.api.nvim_create_autocmd('FileType', {
 -- }}}
 
 -- Plugins {{{
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    is_bootstrap = true
-    vim.fn.system { 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path }
-    vim.cmd [[packadd packer.nvim]]
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
 
-require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-    use 'ervandew/supertab'
-    vim.g.SuperTabMappingForward = '<s-tab>'
-    vim.g.SuperTabMappingBackward = '<tab>'
+require('lazy').setup({
+    {
+        'ervandew/supertab',
+        config = function()
+            vim.g.SuperTabMappingForward = '<s-tab>'
+            vim.g.SuperTabMappingBackward = '<tab>'
+        end,
+    },
 
-    use 'nathanaelkane/vim-indent-guides'
-    vim.api.nvim_set_hl(0, 'IndentGuidesOdd', {ctermbg='black'})
-    vim.api.nvim_set_hl(0, 'IndentGuidesEven', {ctermbg='darkgrey'})
-    vim.g.indent_guides_guide_size = 1
-    vim.g.indent_guides_start_level = 2
-    vim.g.indent_guides_enable_on_vim_startup = 1
+    {
+        'nathanaelkane/vim-indent-guides',
+        config = function()
+            vim.api.nvim_set_hl(0, 'IndentGuidesOdd', {ctermbg='black'})
+            vim.api.nvim_set_hl(0, 'IndentGuidesEven', {ctermbg='darkgrey'})
+            vim.g.indent_guides_guide_size = 1
+            vim.g.indent_guides_start_level = 2
+            vim.g.indent_guides_enable_on_vim_startup = 1
+        end,
+    },
 
-    use 'altercation/vim-colors-solarized'
-    vim.cmd.colorscheme('solarized')
+    'altercation/vim-colors-solarized',
+    'folke/tokyonight.nvim',
+    {
+        'scrooloose/nerdcommenter',
+        keys = "<leader>c<space>",
+    },
 
-    use 'scrooloose/nerdcommenter'
+    {
+        'kien/rainbow_parentheses.vim',
+        config = function()
+            vim.api.nvim_create_autocmd('VimEnter', {
+                command = 'RainbowParenthesesToggle'
+            })
+            vim.api.nvim_create_autocmd('Syntax', {
+                command = 'RainbowParenthesesLoadRound'
+            })
+        end,
+    },
 
-    use 'kien/rainbow_parentheses.vim'
-    vim.api.nvim_create_autocmd('VimEnter', {
-        command = 'RainbowParenthesesToggle'
-    })
-    vim.api.nvim_create_autocmd('Syntax', {
-        command = 'RainbowParenthesesLoadRound'
-    })
+    {
+        'windwp/nvim-autopairs',
+        config = function()
+            require('nvim-autopairs').setup({
+                fast_wrap = {},
+            })
+        end,
+    },
 
-    use 'windwp/nvim-autopairs'
-    require('nvim-autopairs').setup({
-        fast_wrap = {},
-    })
+    {
+        'nvim-tree/nvim-tree.lua',
+        config = function()
+            vim.g.loaded_netrw = 1
+            vim.g.loaded_netrwPlugin = 1
+            require("nvim-tree").setup()
+        end,
+    },
 
-    use 'nvim-tree/nvim-tree.lua'
-    vim.g.loaded_netrw = 1
-    vim.g.loaded_netrwPlugin = 1
-    require("nvim-tree").setup()
+    'nvim-lua/plenary.nvim',
 
-    use 'nvim-lua/plenary.nvim'
+    {
+        'nvim-telescope/telescope.nvim',
+        config = function()
+            vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = 'Find recently opened files' })
+            vim.keymap.set('n', '<leader>bf', require('telescope.builtin').buffers, { desc = 'Find in buffers' })
+        end,
+    },
 
-    use 'nvim-telescope/telescope.nvim'
-    vim.keymap.set('n', '<leader>r', require('telescope.builtin').oldfiles, { desc = 'Find recently opened files' })
-    vim.keymap.set('n', '<leader>bf', require('telescope.builtin').buffers, { desc = 'Find in buffers' })
+    {
+        'junegunn/fzf.vim',
+        config = function()
+            if vim.fn['system']("uname -m") == "arm64\n" then
+                vim.opt.rtp:append('/opt/homebrew/opt/fzf')
+            else
+                vim.opt.rtp:append('/usr/local/opt/fzf')
+            end
+            vim.keymap.set('n', '<C-p>', ':Files<cr>')
+            vim.keymap.set('n', '<M-p>', ':Files %:h<cr>', { noremap = true })
+            vim.g.fzf_preview_window = ''
+        end,
+    },
 
-    use 'junegunn/fzf.vim'
-    if vim.fn['system']("uname -m") == "arm64\n" then
-        vim.opt.rtp:append('/opt/homebrew/opt/fzf')
-    else
-        vim.opt.rtp:append('/usr/local/opt/fzf')
-    end
-    vim.keymap.set('n', '<C-p>', ':Files<cr>')
-    vim.keymap.set('n', '<M-p>', ':Files %:h<cr>', { noremap = true })
-    vim.g.fzf_preview_window = ''
+    {
+        'gbprod/yanky.nvim',
+        config = function()
+            vim.keymap.set('n', '<F2>', ':Telescope yank_history<cr>', { silent = true, noremap = true })
+            require("telescope").load_extension("yank_history")
+            require("yanky").setup({
+              picker = {
+                select = {
+                  action = nil, -- nil to use default put action
+                },
+                telescope = {
+                  mappings = nil, -- nil to use default mappings
+                },
+                system_clipboard = {
+                    sync_with_ring = false,
+                },
+              },
+            })
+        end,
+    },
 
-    use 'gbprod/yanky.nvim'
-    vim.keymap.set('n', '<F2>', ':Telescope yank_history<cr>', { silent = true, noremap = true })
-    require("telescope").load_extension("yank_history")
-    require("yanky").setup({
-      picker = {
-        select = {
-          action = nil, -- nil to use default put action
-        },
-        telescope = {
-          mappings = nil, -- nil to use default mappings
-        },
-        system_clipboard = {
-            sync_with_ring = false,
-        },
-      },
-    })
+    {
+        'vim-airline/vim-airline',
+        config = function()
+            vim.g['airline#extensions#branch#enabled'] = 0
+        end,
+    },
 
-    use 'vim-airline/vim-airline'
-    vim.g['airline#extensions#branch#enabled'] = 0
+    {
+        'tmhedberg/SimpylFold',
+        config = function()
+            vim.g.SimpylFold_fold_docstring = 0
+        end,
+    },
 
-    use 'tmhedberg/SimpylFold'
-    vim.g.SimpylFold_fold_docstring = 0
+    'wwwjfy/numbered-tabline',
 
-    use 'wwwjfy/numbered-tabline'
+    {
+        'mileszs/ack.vim',
+        config = function()
+            if vim.fn.executable('rg') then
+                vim.g.ackprg = 'rg --vimgrep'
+            end
+            vim.keymap.set('n', '<Leader>a.', ':Ack!<Space>', { noremap = true })
+            vim.keymap.set('n', '<Leader>ad', ':Ack!<Space><Space>%:p:h<left><left><left><left><left><left>', { noremap = true })
+        end,
+    },
 
-    use 'mileszs/ack.vim'
-    if vim.fn.executable('rg') then
-        vim.g.ackprg = 'rg --vimgrep'
-    end
-    vim.keymap.set('n', '<Leader>a.', ':Ack!<Space>', { noremap = true })
-    vim.keymap.set('n', '<Leader>ad', ':Ack!<Space><Space>%:p:h<left><left><left><left><left><left>', { noremap = true })
+    'mbbill/undotree',
+    'jlanzarotta/bufexplorer',
+    'ruanyl/vim-gh-line',
+    'tpope/vim-fugitive',
+    'nathangrigg/vim-beancount',
 
-    use 'mbbill/undotree'
-    use 'jlanzarotta/bufexplorer'
-    use 'ruanyl/vim-gh-line'
-    use 'tpope/vim-fugitive'
-    use 'nathangrigg/vim-beancount'
-    use 'aliva/vim-fish'
+    {
+        'aliva/vim-fish',
+        ft = 'fish',
+    },
 
-    use 'ray-x/go.nvim'
-    require('go').setup({
-        comment_placeholder = '',
-        max_line_len = 3000,
-        goimport = 'golines',
-    })
-    vim.api.nvim_create_autocmd('BufWritePre', {
-        pattern = '*.go',
-        callback = function(args)
-            require('go.format').goimport()
-        end
-    })
-    vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'go',
-        callback = function(args)
-            vim.keymap.set('n', '<C-w>x', ':GoAltV<cr>', { noremap = true })
-        end
-    })
+    {
+        'ray-x/go.nvim',
+        ft = 'go',
+        config = function()
+            require('go').setup({
+                comment_placeholder = '',
+                max_line_len = 3000,
+                goimport = 'golines',
+            })
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                pattern = '*.go',
+                callback = function(args)
+                    require('go.format').goimport()
+                end
+            })
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = 'go',
+                callback = function(args)
+                    vim.keymap.set('n', '<C-w>x', ':GoAltV<cr>', { noremap = true })
+                end
+            })
+        end,
+    },
 
-    use 'ray-x/guihua.lua'
-    use 'nvim-treesitter/nvim-treesitter'
+    'ray-x/guihua.lua',
+    'nvim-treesitter/nvim-treesitter',
 
-    use 'sindrets/diffview.nvim'
-    require('diffview').setup({
-        view = {
-            merge_tool = {
-                layout = 'diff4_mixed',
-            }
-        }
-    })
+    {
+        'sindrets/diffview.nvim',
+        config = function()
+            require('diffview').setup({
+                view = {
+                    merge_tool = {
+                        layout = 'diff4_mixed',
+                    }
+                }
+            })
+        end,
+    },
 
 -- {{{ File Types
-    use 'hashivim/vim-terraform'
-    vim.g.terraform_completion_keys = 1
-    vim.g.terraform_align = 1
-    vim.g.terraform_fmt_on_save = 1
-    vim.g.terraform_registry_module_completion = 0
+    {
+        'hashivim/vim-terraform',
+        config = function()
+            vim.g.terraform_completion_keys = 1
+            vim.g.terraform_align = 1
+            vim.g.terraform_fmt_on_save = 1
+            vim.g.terraform_registry_module_completion = 0
+        end,
+    },
 
-    use 'keith/swift.vim'
+    'keith/swift.vim',
+    'leafgarland/typescript-vim',
 
-    use 'rust-lang/rust.vim'
-    vim.g.rustfmt_autosave = 1
+    {
+        'rust-lang/rust.vim',
+        config = function()
+            vim.g.rustfmt_autosave = 1
+        end,
+    },
+-- }}}
 
-    use 'leafgarland/typescript-vim'
+    {
+        'neovim/nvim-lspconfig',
+        dependencies = {
+            'j-hui/fidget.nvim',
+        },
+    },
+
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/nvim-cmp',
+    'ray-x/lsp_signature.nvim',
+})
 -- }}}
 
 -- LSP {{{
-    use {
-        'neovim/nvim-lspconfig',
-        requires = {
-            'j-hui/fidget.nvim',
-        },
-    }
+local nvim_lsp = require('lspconfig')
+local lsp_handlers = require('lsp_handlers')
 
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/nvim-cmp'
-    use 'ray-x/lsp_signature.nvim'
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    local nvim_lsp = require('lspconfig')
-    local lsp_handlers = require('lsp_handlers')
+  local opts = { noremap=true, silent=true, buffer = bufnr }
 
-    local on_attach = function(client, bufnr)
-      -- Enable completion triggered by <c-x><c-o>
-      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.keymap.set('n', 'gdd', vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', 'gdt', function()
+      vim.cmd('tab split')
+      vim.lsp.buf.definition()
+  end, opts)
+  vim.keymap.set('n', 'gds', function()
+      vim.cmd('vsplit')
+      vim.lsp.buf.definition()
+  end, opts)
+  vim.keymap.set('n', 'gi', function()
+      vim.cmd('tab split')
+      lsp_handlers.goto_implementations()
+  end, opts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  vim.keymap.set('n', 'cn', vim.diagnostic.goto_next, opts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, ops)
 
-      local opts = { noremap=true, silent=true, buffer = bufnr }
-
-      vim.keymap.set('n', 'gdd', vim.lsp.buf.definition, opts)
-      vim.keymap.set('n', 'gdt', function()
-          vim.cmd('tab split')
-          vim.lsp.buf.definition()
-      end, opts)
-      vim.keymap.set('n', 'gds', function()
-          vim.cmd('vsplit')
-          vim.lsp.buf.definition()
-      end, opts)
-      vim.keymap.set('n', 'gi', function()
-          vim.cmd('tab split')
-          lsp_handlers.goto_implementations()
-      end, opts)
-      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-      vim.keymap.set('n', 'cn', vim.diagnostic.goto_next, opts)
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, ops)
-
-      require("lsp_signature").on_attach({
-          bind = true, -- This is mandatory, otherwise border config won't get registered.
-          handler_opts = {
-            border = "rounded"
-          }
-      })
-    end
-
-    local util = require 'lspconfig.util'
-
-    nvim_lsp.gopls.setup{
-        on_attach = on_attach,
-        root_dir = util.root_pattern("go.mod", "doc.go"),
-    }
-
-    require('fidget').setup()
-
-    local cmp = require('cmp')
-    cmp.setup {
-      completion = {
-        autocomplete = false,
-        completeopt = "menu,noselect",
-        keyword_length = 2,
-      },
-      preselect = "none",
-      mapping = {
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        },
-        ['<Tab>'] = function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-          else
-            fallback()
-          end
-        end,
-        ['<S-Tab>'] = function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end,
-      },
-      sources = {
-        { name = 'nvim_lsp' },
+  require("lsp_signature").on_attach({
+      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      handler_opts = {
+        border = "rounded"
       }
-    }
+  })
+end
 
-    vim.api.nvim_create_autocmd({'TextChanged', 'TextChangedI', 'TextChangedP'}, {
-        callback = function(args)
-            local cursor = vim.api.nvim_win_get_cursor(0)
-            local line = vim.api.nvim_get_current_line()
-            if string.sub(line, cursor[2], cursor[2]) == "." then
-              cmp.complete()
-            end
+local util = require 'lspconfig.util'
+
+nvim_lsp.gopls.setup{
+    on_attach = on_attach,
+    root_dir = util.root_pattern("go.mod", "doc.go"),
+}
+
+require('fidget').setup()
+
+local cmp = require('cmp')
+cmp.setup {
+  completion = {
+    autocomplete = false,
+    completeopt = "menu,noselect",
+    keyword_length = 2,
+  },
+  preselect = "none",
+  mapping = {
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+      else
+        fallback()
+      end
+    end,
+    ['<S-Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end,
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+  }
+}
+
+vim.api.nvim_create_autocmd({'TextChanged', 'TextChangedI', 'TextChangedP'}, {
+    callback = function(args)
+        local cursor = vim.api.nvim_win_get_cursor(0)
+        local line = vim.api.nvim_get_current_line()
+        if string.sub(line, cursor[2], cursor[2]) == "." then
+          cmp.complete()
         end
-    })
-end)
+    end
+})
 -- }}}
--- }}}
+
+vim.o.background = 'dark'
+vim.cmd.colorscheme('tokyonight')
 
 -- Tab {{{
 local current_tab = 0
