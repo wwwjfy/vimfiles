@@ -79,6 +79,14 @@ vim.keymap.set('i', '<C-f>', '<C-o>l', { noremap = true })
 vim.keymap.set('i', '<C-d>', '<C-o>x', { noremap = true })
 -- }}}
 
+local fzf_rtp = function()
+    if vim.fn['system']("uname -m") == "arm64\n" then
+        return '/opt/homebrew/opt/fzf'
+    else
+        return '/usr/local/opt/fzf'
+    end
+end
+
 -- File Type {{{
 vim.api.nvim_create_autocmd('FileType', {
     pattern = {'make', 'gitconfig'},
@@ -185,11 +193,6 @@ require('lazy').setup({
     {
         'junegunn/fzf.vim',
         config = function()
-            if vim.fn['system']("uname -m") == "arm64\n" then
-                vim.opt.rtp:append('/opt/homebrew/opt/fzf')
-            else
-                vim.opt.rtp:append('/usr/local/opt/fzf')
-            end
             vim.keymap.set('n', '<C-p>', ':Files<cr>')
             vim.keymap.set('n', '<M-p>', ':Files %:h<cr>', { noremap = true })
             vim.g.fzf_preview_window = ''
@@ -235,10 +238,12 @@ require('lazy').setup({
 
     {
         'mileszs/ack.vim',
-        config = function()
+        init = function()
             if vim.fn.executable('rg') then
                 vim.g.ackprg = 'rg --vimgrep'
             end
+        end,
+        config = function()
             vim.keymap.set('n', '<Leader>a.', ':Ack!<Space>', { noremap = true })
             vim.keymap.set('n', '<Leader>ad', ':Ack!<Space><Space>%:p:h<left><left><left><left><left><left>', { noremap = true })
         end,
@@ -285,7 +290,7 @@ require('lazy').setup({
         dependencies = {'p00f/nvim-ts-rainbow'},
         config = function()
             require('nvim-treesitter.configs').setup({
-                ensure_installed = { "go" },
+                ensure_installed = { "go", "lua" },
                 highlight = {
                     enable = true,
                 },
@@ -295,6 +300,8 @@ require('lazy').setup({
             })
         end
     },
+
+    'nvim-treesitter/playground',
 
     {
         'sindrets/diffview.nvim',
@@ -341,6 +348,21 @@ require('lazy').setup({
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/nvim-cmp',
     'ray-x/lsp_signature.nvim',
+
+    {
+        'folke/todo-comments.nvim',
+        config = function()
+            require("todo-comments").setup({
+                signs = false,
+            })
+        end
+    },
+}, {
+    performance = {
+        rtp = {
+            paths = { fzf_rtp() },
+        },
+    },
 })
 -- }}}
 
