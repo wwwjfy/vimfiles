@@ -292,7 +292,7 @@ require('lazy').setup({
         dependencies = {'p00f/nvim-ts-rainbow'},
         config = function()
             require('nvim-treesitter.configs').setup({
-                ensure_installed = { "go", "lua" },
+                ensure_installed = { "go", "lua", "comment" },
                 highlight = {
                     enable = true,
                 },
@@ -350,15 +350,6 @@ require('lazy').setup({
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/nvim-cmp',
     'ray-x/lsp_signature.nvim',
-
-    {
-        'folke/todo-comments.nvim',
-        config = function()
-            require("todo-comments").setup({
-                signs = false,
-            })
-        end
-    },
 }, {
     performance = {
         rtp = {
