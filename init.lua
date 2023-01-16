@@ -155,6 +155,8 @@ require('lazy').setup({
 
     'altercation/vim-colors-solarized',
     'folke/tokyonight.nvim',
+    'EdenEast/nightfox.nvim',
+
     {
         'scrooloose/nerdcommenter',
         keys = {
