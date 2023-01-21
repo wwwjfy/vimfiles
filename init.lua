@@ -160,7 +160,7 @@ require('lazy').setup({
     {
         'scrooloose/nerdcommenter',
         keys = {
-            {"<leader>c<space>", 'NERDCommenterToggle', {"n", "v"}},
+            {"<leader>c<space>", 'NERDCommenterToggle', mode = {"n", "v"}},
         },
     },
 
