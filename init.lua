@@ -135,14 +135,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
     {
-        'ervandew/supertab',
-        config = function()
-            vim.g.SuperTabMappingForward = '<s-tab>'
-            vim.g.SuperTabMappingBackward = '<tab>'
-        end,
-    },
-
-    {
         'nathanaelkane/vim-indent-guides',
         config = function()
             vim.api.nvim_set_hl(0, 'IndentGuidesOdd', {ctermbg='black'})
@@ -155,7 +147,6 @@ require('lazy').setup({
 
     'altercation/vim-colors-solarized',
     'folke/tokyonight.nvim',
-    'EdenEast/nightfox.nvim',
 
     {
         'scrooloose/nerdcommenter',
@@ -347,8 +338,10 @@ require('lazy').setup({
         },
     },
 
-    'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/nvim-cmp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
     'ray-x/lsp_signature.nvim',
 }, {
     performance = {
@@ -403,50 +396,45 @@ nvim_lsp.gopls.setup{
 
 require('fidget').setup()
 
-local cmp = require('cmp')
-cmp.setup {
-  completion = {
-    autocomplete = false,
-    completeopt = "menu,noselect",
-    keyword_length = 2,
-  },
-  preselect = "none",
-  mapping = {
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-      else
-        fallback()
-      end
-    end,
-    ['<S-Tab>'] = function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end,
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-  }
+local cmp_menu = {
+    nvim_lua = "[lua]",
+    nvim_lsp = "[LSP]",
+    buffer = "[buf]",
 }
 
-vim.api.nvim_create_autocmd({'TextChanged', 'TextChangedI', 'TextChangedP'}, {
-    callback = function(args)
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        local line = vim.api.nvim_get_current_line()
-        if string.sub(line, cursor[2], cursor[2]) == "." then
-          cmp.complete()
-        end
+local get_cmp_source = function(source_name)
+    local r = cmp_menu[source_name]
+    if r ~= nil then
+        return r
     end
-})
--- }}}
+
+    return "[" .. source_name .. "]"
+end
+
+local cmp = require('cmp')
+cmp.setup {
+    mapping = cmp.mapping.preset.insert({
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    }),
+    preselect = "none",
+    sources = {
+        { name = "nvim_lua" },
+        { name = "nvim_lsp", keyword_length = 100 },
+        { name = "buffer" , keyword_length = 100 },
+    },
+    formatting = {
+        format = function(entry, vim_item)
+            vim_item.menu = get_cmp_source(entry.source.name)
+            return vim_item
+        end
+    },
+    experimental = {
+        native_menu = false,
+        ghost_text = true,
+    },
+}
 
 vim.o.background = 'dark'
 vim.cmd.colorscheme('tokyonight')
