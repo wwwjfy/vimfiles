@@ -31,6 +31,7 @@ return {
 
     {
         'nvim-tree/nvim-tree.lua',
+        cmd = { "NvimTreeToggle", "NvimTreeFindFile" },
         config = function()
             vim.g.loaded_netrw = 1
             vim.g.loaded_netrwPlugin = 1
