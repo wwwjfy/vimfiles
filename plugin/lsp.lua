@@ -63,11 +63,10 @@ cmp.setup {
       ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
-    preselect = "none",
     sources = {
         { name = "nvim_lua" },
-        { name = "nvim_lsp", keyword_length = 100 },
-        { name = "buffer" , keyword_length = 100 },
+        { name = "nvim_lsp" },
+        { name = "buffer", keyword_length = 5 },
     },
     formatting = {
         format = function(entry, vim_item)
