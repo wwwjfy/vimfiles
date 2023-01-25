@@ -55,6 +55,7 @@ return {
         config = function()
             vim.keymap.set("n", "<leader>r", require("telescope.builtin").oldfiles, { desc = "Find recently opened files" })
             vim.keymap.set("n", "<leader>bf", require("telescope.builtin").buffers, { desc = "Find in buffers" })
+            vim.keymap.set("n", "<leader>bj", require("telescope.builtin").jumplist, { desc = "Find in buffers" })
         end,
     },
 
