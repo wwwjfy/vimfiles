@@ -1,45 +1,45 @@
-local nvim_lsp = require('lspconfig')
-local lsp_handlers = require('lsp_handlers')
+local nvim_lsp = require("lspconfig")
+local lsp_handlers = require("lsp_handlers")
 
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   local opts = { noremap=true, silent=true, buffer = bufnr }
 
-  vim.keymap.set('n', 'gdd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'gdt', function()
-      vim.cmd('tab split')
+  vim.keymap.set("n", "gdd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "gdt", function()
+      vim.cmd("tab split")
       vim.lsp.buf.definition()
   end, opts)
-  vim.keymap.set('n', 'gds', function()
-      vim.cmd('vsplit')
+  vim.keymap.set("n", "gds", function()
+      vim.cmd("vsplit")
       vim.lsp.buf.definition()
   end, opts)
-  vim.keymap.set('n', 'gi', function()
-      vim.cmd('tab split')
+  vim.keymap.set("n", "gi", function()
+      vim.cmd("tab split")
       lsp_handlers.goto_implementations()
   end, opts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  vim.keymap.set('n', 'cn', vim.diagnostic.goto_next, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, ops)
+  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "cn", vim.diagnostic.goto_next, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, ops)
 
   require("lsp_signature").on_attach({
-      bind = true, -- This is mandatory, otherwise border config won't get registered.
+      bind = true, -- This is mandatory, otherwise border config won"t get registered.
       handler_opts = {
         border = "rounded"
       }
   })
 end
 
-local util = require 'lspconfig.util'
+local util = require "lspconfig.util"
 
 nvim_lsp.gopls.setup{
     on_attach = on_attach,
     root_dir = util.root_pattern("go.mod", "doc.go"),
 }
 
-require('fidget').setup()
+require("fidget").setup()
 
 local cmp_menu = {
     nvim_lua = "[lua]",
@@ -56,12 +56,12 @@ local get_cmp_source = function(source_name)
     return "[" .. source_name .. "]"
 end
 
-local cmp = require('cmp')
+local cmp = require("cmp")
 cmp.setup {
     mapping = cmp.mapping.preset.insert({
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
     sources = {
         { name = "nvim_lua" },

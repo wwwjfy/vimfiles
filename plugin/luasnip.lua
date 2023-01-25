@@ -6,7 +6,7 @@ local i = ls.insert_node
 local sn = ls.snippet_node
 local fmt = require("luasnip.extras.fmt").fmt
 
-vim.keymap.set('i', '<c-j>', function()
+vim.keymap.set("i", "<c-j>", function()
     ls.expand_or_jump()
 end, { noremap = true })
 
