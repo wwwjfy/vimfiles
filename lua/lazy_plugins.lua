@@ -1,4 +1,6 @@
 return {
+    'nvim-lua/plenary.nvim',
+
     {
         'nathanaelkane/vim-indent-guides',
         config = function()
@@ -39,7 +41,9 @@ return {
         end,
     },
 
-    'nvim-lua/plenary.nvim',
+    {
+        'L3MON4D3/LuaSnip',
+    },
 
     {
         'nvim-telescope/telescope.nvim',

@@ -1,4 +1,5 @@
 {
+  "LuaSnip": { "branch": "master", "commit": "3181cef8a5c6a71f263a28e61651233d7a7afeb2" },
   "SimpylFold": { "branch": "master", "commit": "ff4c85197c5555715093c08a8d4f9d493c4d80cd" },
   "ack.vim": { "branch": "master", "commit": "36e40f9ec91bdbf6f1adf408522a73a6925c3042" },
   "bufexplorer": { "branch": "master", "commit": "5a830d5d2d7417bf02339ec279c90e98dde822f8" },
