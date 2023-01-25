@@ -8,7 +8,8 @@ return {
             vim.api.nvim_set_hl(0, 'IndentGuidesEven', {ctermbg='darkgrey'})
             vim.g.indent_guides_guide_size = 1
             vim.g.indent_guides_start_level = 2
-            vim.g.indent_guides_enable_on_vim_startup = 1
+            vim.g.indent_guides_default_mapping = 0
+            vim.call('indent_guides#enable')
         end,
     },
 
@@ -33,7 +34,11 @@ return {
 
     {
         'nvim-tree/nvim-tree.lua',
-        cmd = { "NvimTreeToggle", "NvimTreeFindFile" },
+        keys = {
+            {'<leader>gt', function()
+                require("nvim-tree.api").tree.toggle({ find_file = true, focus = true })
+            end, { desc = 'open nvim tree' }}
+        },
         config = function()
             vim.g.loaded_netrw = 1
             vim.g.loaded_netrwPlugin = 1
@@ -92,6 +97,7 @@ return {
 
     {
         'tmhedberg/SimpylFold',
+        ft = 'python',
         config = function()
             vim.g.SimpylFold_fold_docstring = 0
         end,
@@ -116,7 +122,11 @@ return {
     'jlanzarotta/bufexplorer',
     'ruanyl/vim-gh-line',
     'tpope/vim-fugitive',
-    'nathangrigg/vim-beancount',
+
+    {
+        'nathangrigg/vim-beancount',
+        ft = 'beancount',
+    },
 
     {
         'aliva/vim-fish',
@@ -153,7 +163,7 @@ return {
         dependencies = {'p00f/nvim-ts-rainbow'},
         config = function()
             require('nvim-treesitter.configs').setup({
-                ensure_installed = { "go", "lua", "comment" },
+                ensure_installed = { "go", "lua", "comment", "vim" },
                 highlight = {
                     enable = true,
                 },
@@ -182,6 +192,7 @@ return {
 -- {{{ File Types
     {
         'hashivim/vim-terraform',
+        ft = 'terraform',
         config = function()
             vim.g.terraform_completion_keys = 1
             vim.g.terraform_align = 1
@@ -190,17 +201,26 @@ return {
         end,
     },
 
-    'keith/swift.vim',
-    'leafgarland/typescript-vim',
+    {
+        'keith/swift.vim',
+        ft = 'swift',
+    },
+
+    {
+        'leafgarland/typescript-vim',
+        ft = 'typescript',
+    },
 
     {
         'rust-lang/rust.vim',
+        ft = 'rust',
         config = function()
             vim.g.rustfmt_autosave = 1
         end,
     },
 -- }}}
 
+---{{{ LSP
     {
         'neovim/nvim-lspconfig',
         dependencies = {
@@ -213,4 +233,5 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',
     'ray-x/lsp_signature.nvim',
+--- }}}
 }
