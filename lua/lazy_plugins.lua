@@ -16,10 +16,10 @@ return {
     'folke/tokyonight.nvim',
 
     {
-        'scrooloose/nerdcommenter',
-        keys = {
-            {"<leader>c<space>", 'NERDCommenterToggle', mode = {"n", "v"}},
-        },
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end,
     },
 
     {

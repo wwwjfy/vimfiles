@@ -1,4 +1,5 @@
 {
+  "Comment.nvim": { "branch": "master", "commit": "eab2c83a0207369900e92783f56990808082eac2" },
   "LuaSnip": { "branch": "master", "commit": "3181cef8a5c6a71f263a28e61651233d7a7afeb2" },
   "SimpylFold": { "branch": "master", "commit": "ff4c85197c5555715093c08a8d4f9d493c4d80cd" },
   "ack.vim": { "branch": "master", "commit": "36e40f9ec91bdbf6f1adf408522a73a6925c3042" },
@@ -13,7 +14,6 @@
   "guihua.lua": { "branch": "master", "commit": "1a8af45b2117d28ca56d38c275af1c211f0ffd94" },
   "lazy.nvim": { "branch": "main", "commit": "809d67fcf0f6dd5dabdd1c2b88d451cef4695880" },
   "lsp_signature.nvim": { "branch": "master", "commit": "b86f249cba85ec2f0f74c62b65898bade00b4413" },
-  "nerdcommenter": { "branch": "master", "commit": "98cc4a2d64ca67cccbf5b5cf47c682ebadaaff58" },
   "numbered-tabline": { "branch": "master", "commit": "21be90b118c42e7a3003c2ae810703ad68ed8f03" },
   "nvim-autopairs": { "branch": "master", "commit": "31042a5823b55c4bfb30efcbba2fc1b5b53f90dc" },
   "nvim-cmp": { "branch": "main", "commit": "11a95792a5be0f5a40bab5fc5b670e5b1399a939" },
