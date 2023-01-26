@@ -1,7 +1,7 @@
 local nvim_lsp = require("lspconfig")
 local lsp_handlers = require("lsp_handlers")
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
@@ -22,7 +22,7 @@ local on_attach = function(client, bufnr)
   end, opts)
   vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
   vim.keymap.set("n", "cn", vim.diagnostic.goto_next, opts)
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, ops)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
   require("lsp_signature").on_attach({
       bind = true, -- This is mandatory, otherwise border config won"t get registered.
@@ -34,10 +34,35 @@ end
 
 local util = require "lspconfig.util"
 
-nvim_lsp.gopls.setup{
+nvim_lsp.gopls.setup({
     on_attach = on_attach,
     root_dir = util.root_pattern("go.mod", "doc.go"),
-}
+})
+
+nvim_lsp.sumneko_lua.setup({
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            runtime = {
+                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                version = 'LuaJIT',
+            },
+            diagnostics = {
+                -- Get the language server to recognize the `vim` global
+                globals = {'vim'},
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = vim.api.nvim_get_runtime_file("", true),
+                checkThirdParty = false,
+            },
+            -- Do not send telemetry data containing a randomized but unique identifier
+            telemetry = {
+                enable = false,
+            },
+        },
+    },
+})
 
 require("fidget").setup()
 
