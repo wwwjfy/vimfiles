@@ -64,6 +64,11 @@ nvim_lsp.sumneko_lua.setup({
     },
 })
 
+nvim_lsp.rust_analyzer.setup({
+    cmd = {"rustup", "run", "stable", "rust-analyzer"},
+    on_attach = on_attach,
+})
+
 require("fidget").setup()
 
 local cmp_menu = {

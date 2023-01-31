@@ -15,6 +15,8 @@ return {
 
     "altercation/vim-colors-solarized",
     "folke/tokyonight.nvim",
+    "rebelot/kanagawa.nvim",
+    "sainnhe/edge",
 
     {
         "numToStr/Comment.nvim",
@@ -145,13 +147,13 @@ return {
             })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 pattern = "*.go",
-                callback = function(args)
+                callback = function(_)
                     require("go.format").goimport()
                 end
             })
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = "go",
-                callback = function(args)
+                callback = function(_)
                     vim.keymap.set("n", "<C-w>x", ":GoAltV<cr>", { noremap = true })
                 end
             })

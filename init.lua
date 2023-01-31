@@ -141,7 +141,7 @@ require("lazy").setup("lazy_plugins", {
 
 -- Colorscheme {{{
 vim.o.background = "dark"
-vim.cmd.colorscheme("tokyonight")
+vim.cmd.colorscheme("kanagawa")
 -- }}}
 
 -- Tab {{{
