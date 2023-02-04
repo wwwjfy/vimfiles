@@ -16,7 +16,7 @@ return {
     "altercation/vim-colors-solarized",
     "folke/tokyonight.nvim",
     "rebelot/kanagawa.nvim",
-    "sainnhe/edge",
+    "gbprod/nord.nvim",
 
     {
         "numToStr/Comment.nvim",

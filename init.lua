@@ -13,7 +13,7 @@ vim.o.splitright = true
 -- Display {{{
 vim.o.background = "light"
 vim.o.scrolloff = 4
-vim.o.number = true
+vim.o.relativenumber = true
 vim.o.textwidth = 0
 vim.o.tabstop = 4
 vim.o.softtabstop = 4
@@ -82,13 +82,13 @@ vim.keymap.set("i", "<C-d>", "<C-o>x", { noremap = true })
 -- File Type {{{
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {"make", "gitconfig"},
-    callback = function(args)
+    callback = function(_)
         vim.o.expandtab = false
     end
 })
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {"objc", "coffee", "html", "css", "scss", "ruby", "eruby", "yaml"},
-    callback = function(args)
+    callback = function(_)
         vim.o.tabstop = 2
         vim.o.softtabstop = 2
         vim.o.shiftwidth = 2
@@ -99,13 +99,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {"beancount"},
-    callback = function(args)
+    callback = function(_)
         vim.keymap.set({"n", "v"}, "<leader>.", ":AlignCommodity<CR>", { noremap = true })
     end
 })
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {"qf"},
-    callback = function(args)
+    callback = function(_)
         vim.keymap.set("n", "t", "<C-W><Enter><C-W>T", { noremap = true, buffer = true, desc = "open selected line in a new tab" })
     end
 })
@@ -148,13 +148,13 @@ vim.cmd.colorscheme("kanagawa")
 local current_tab = 0
 local last_tab = 0
 vim.api.nvim_create_autocmd({"TabEnter", "TabLeave"}, {
-    callback = function(args)
+    callback = function(_)
         current_tab = vim.api.nvim_tabpage_get_number(0)
         last_tab = vim.fn["tabpagenr"]("$")
     end
 })
 vim.api.nvim_create_autocmd("TabClosed", {
-    callback = function(args)
+    callback = function(_)
         print(current_tab, last_tab)
         if current_tab > 1 and current_tab < last_tab then
             vim.cmd("tabp")
