@@ -26,6 +26,7 @@ vim.o.cursorline = true
 vim.o.cursorcolumn = true
 vim.o.colorcolumn = "+0"
 vim.o.showtabline = 2
+vim.o.termguicolors = true
 
 vim.api.nvim_set_hl(0, "WhiteSpaceEOL", {ctermbg="red"})
 vim.fn.matchadd("WhiteSpaceEOL", "\\s\\+$")
@@ -158,7 +159,7 @@ require("lazy").setup("lazy_plugins", {
 
 -- Colorscheme {{{
 vim.o.background = "dark"
-vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("nord")
 -- }}}
 
 -- Tab {{{
