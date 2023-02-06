@@ -13,6 +13,7 @@ vim.o.splitright = true
 -- Display {{{
 vim.o.background = "light"
 vim.o.scrolloff = 4
+vim.o.number = true
 vim.o.relativenumber = true
 vim.o.textwidth = 0
 vim.o.tabstop = 4
@@ -134,6 +135,22 @@ require("lazy").setup("lazy_plugins", {
     performance = {
         rtp = {
             paths = { fzf_rtp() },
+        },
+    },
+    ui = {
+        icons = {
+            cmd = "⌘",
+            config = "🛠",
+            event = "📅",
+            ft = "📂",
+            init = "⚙",
+            keys = "🗝",
+            plugin = "🔌",
+            runtime = "💻",
+            source = "📄",
+            start = "🚀",
+            task = "📌",
+            lazy = "💤 ",
         },
     },
 })
