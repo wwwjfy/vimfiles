@@ -173,7 +173,6 @@ vim.api.nvim_create_autocmd({"TabEnter", "TabLeave"}, {
 })
 vim.api.nvim_create_autocmd("TabClosed", {
     callback = function(_)
-        print(current_tab, last_tab)
         if current_tab > 1 and current_tab < last_tab then
             vim.cmd("tabp")
         end
