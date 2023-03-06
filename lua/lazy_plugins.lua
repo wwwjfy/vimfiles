@@ -164,7 +164,7 @@ return {
     "ray-x/guihua.lua",
     {
         "nvim-treesitter/nvim-treesitter",
-        dependencies = {"p00f/nvim-ts-rainbow"},
+        dependencies = {"HiPhish/nvim-ts-rainbow2"},
         config = function()
             require("nvim-treesitter.configs").setup({
                 ensure_installed = { "go", "lua", "comment", "vim" },
