@@ -79,6 +79,10 @@ vim.keymap.set("i", "<C-k>", "<C-o>D", { noremap = true })
 vim.keymap.set("i", "<C-b>", "<C-o>h", { noremap = true })
 vim.keymap.set("i", "<C-f>", "<C-o>l", { noremap = true })
 vim.keymap.set("i", "<C-d>", "<C-o>x", { noremap = true })
+
+-- copy/paste
+vim.keymap.set("v", "<leader>y", '"xy')
+vim.keymap.set("v", "<leader>p", '"xp')
 -- }}}
 
 -- File Type {{{
