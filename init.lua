@@ -81,6 +81,8 @@ vim.keymap.set("i", "<C-f>", "<C-o>l", { noremap = true })
 vim.keymap.set("i", "<C-d>", "<C-o>x", { noremap = true })
 
 -- copy/paste
+vim.keymap.set("n", "<leader>yy", '"xyy')
+vim.keymap.set("n", "<leader>p", '"xp')
 vim.keymap.set("v", "<leader>y", '"xy')
 vim.keymap.set("v", "<leader>p", '"xp')
 -- }}}
