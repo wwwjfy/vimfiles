@@ -3,8 +3,7 @@ handlers.goto_implementations = function()
   local params = vim.lsp.util.make_position_params()
 
   vim.lsp.buf_request(0, "textDocument/implementation", params, function(err, result, ctx, config)
-    local bufnr = ctx.bufnr
-    local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+    local ft = vim.api.nvim_get_option_value("filetype", {})
 
     if ft == "go" and result ~= nil then
       local new_result = vim.tbl_filter(function(v)

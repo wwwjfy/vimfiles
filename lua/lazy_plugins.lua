@@ -13,9 +13,17 @@ return {
         end,
     },
 
-    "altercation/vim-colors-solarized",
     "folke/tokyonight.nvim",
-    "rebelot/kanagawa.nvim",
+
+    {
+        "rebelot/kanagawa.nvim",
+        config = function()
+            require("kanagawa").setup({
+                compile = true,
+            })
+        end,
+    },
+
     "gbprod/nord.nvim",
 
     {
@@ -34,24 +42,7 @@ return {
         end,
     },
 
-    {
-        "nvim-tree/nvim-tree.lua",
-        keys = {
-            {"<leader>gt", function()
-                require("nvim-tree.api").tree.toggle({ find_file = true, focus = true })
-            end, { desc = "open nvim tree" }}
-        },
-        config = function()
-            vim.g.loaded_netrw = 1
-            vim.g.loaded_netrwPlugin = 1
-            require("nvim-tree").setup()
-            require("nvim-tree").config.renderer.icons.show = {}
-        end,
-    },
-
-    {
-        "L3MON4D3/LuaSnip",
-    },
+    "L3MON4D3/LuaSnip",
 
     {
         "nvim-telescope/telescope.nvim",
@@ -164,10 +155,14 @@ return {
     "ray-x/guihua.lua",
     {
         "nvim-treesitter/nvim-treesitter",
-        dependencies = {"HiPhish/nvim-ts-rainbow2"},
+        dependencies = {"hiphish/rainbow-delimiters.nvim"},
         config = function()
             require("nvim-treesitter.configs").setup({
-                ensure_installed = { "go", "lua", "comment", "vim" },
+                modules = {},
+                auto_install = false,
+                sync_install = false,
+                ignore_install = {},
+                ensure_installed = { "go", "lua", "comment", "vim", "objc" },
                 highlight = {
                     enable = true,
                 },
@@ -177,8 +172,6 @@ return {
             })
         end
     },
-
-    "nvim-treesitter/playground",
 
     {
         "sindrets/diffview.nvim",
@@ -207,7 +200,6 @@ return {
             vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
         end,
     },
-
 
 -- {{{ File Types
     {
@@ -244,11 +236,61 @@ return {
     {
         "neovim/nvim-lspconfig",
         dependencies = {
-            "j-hui/fidget.nvim",
+            {
+                "j-hui/fidget.nvim",
+                config = function()
+                    require("fidget").setup({})
+                end,
+            },
         },
     },
 
-    "hrsh7th/nvim-cmp",
+    {
+        "hrsh7th/nvim-cmp",
+        config = function()
+            local cmp_menu = {
+                nvim_lua = "[lua]",
+                nvim_lsp = "[LSP]",
+                buffer = "[buf]",
+            }
+
+            local get_cmp_source = function(source_name)
+                local r = cmp_menu[source_name]
+                if r ~= nil then
+                    return r
+                end
+
+                return "[" .. source_name .. "]"
+            end
+
+            local cmp = require("cmp")
+            cmp.setup {
+                mapping = {
+                  ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+                  ["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+                  ["<C-Space>"] = cmp.mapping.complete(),
+                  ["<C-e>"] = cmp.mapping.abort(),
+                  ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                },
+                sources = {
+                    { name = "nvim_lua" },
+                    { name = "nvim_lsp" },
+                    { name = "buffer", keyword_length = 5 },
+                },
+                formatting = {
+                    format = function(entry, vim_item)
+                        vim_item.menu = get_cmp_source(entry.source.name)
+                        return vim_item
+                    end
+                },
+                experimental = {
+                    native_menu = false,
+                    ghost_text = true,
+                },
+            }
+        end,
+    },
+
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lua",
