@@ -7,7 +7,7 @@ handlers.goto_implementations = function()
 
     if ft == "go" and result ~= nil then
       local new_result = vim.tbl_filter(function(v)
-        return not string.find(v.uri, "mock_")
+        return not string.find(v.uri, "mock_") and not string.find(v.uri, "mocks/")
       end, result)
 
       if #new_result > 0 then

@@ -2,10 +2,7 @@ local nvim_lsp = require("lspconfig")
 local lsp_handlers = require("lsp_handlers")
 
 local on_attach = function(_, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  local opts = { noremap=true, silent=true, buffer = bufnr }
+  local opts = { noremap=true, silent=true, buffer=bufnr }
 
   vim.keymap.set("n", "gdd", vim.lsp.buf.definition, opts)
   vim.keymap.set("n", "gdt", function()

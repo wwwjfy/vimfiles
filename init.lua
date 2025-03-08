@@ -70,6 +70,10 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true, noremap = true })
 
+-- quickfix switching keymaps
+vim.keymap.set("n", "<M-j>", ":cnext<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<M-k>", ":cprev<cr>", { silent = true, noremap = true })
+
 -- Emacs-compatible keys
 vim.keymap.set("c", "<C-a>", "<home>", { noremap = true })
 vim.keymap.set("c", "<C-e>", "<end>", { noremap = true })
@@ -165,7 +169,7 @@ require("lazy").setup("lazy_plugins", {
 
 -- Colorscheme {{{
 vim.o.background = "dark"
-vim.cmd.colorscheme("kanagawa")
+vim.cmd.colorscheme("monokai-pro")
 -- }}}
 
 -- Tab {{{

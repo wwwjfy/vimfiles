@@ -24,6 +24,8 @@ return {
         end,
     },
 
+    "loctvl842/monokai-pro.nvim",
+
     "gbprod/nord.nvim",
 
     {
@@ -46,12 +48,24 @@ return {
 
     {
         "nvim-telescope/telescope.nvim",
-        config = function()
-            vim.keymap.set("n", "<leader>r", require("telescope.builtin").oldfiles, { desc = "Find recently opened files" })
-            vim.keymap.set("n", "<leader>bf", require("telescope.builtin").buffers, { desc = "Find in buffers" })
-            vim.keymap.set("n", "<leader>bj", require("telescope.builtin").jumplist, { desc = "Find in buffers" })
-        end,
+        keys = {
+            { "<leader>r", require("telescope.builtin").oldfiles, desc = "Find recently opened files" },
+            { "<leader>bf", require("telescope.builtin").buffers, desc = "Find in buffers" },
+            { "<leader>bj", require("telescope.builtin").jumplist, desc = "Find in buffers" },
+        },
+        opts = {
+            pickers = {
+                buffers = {
+                    mappings = {
+                        i = {
+                          ["<c-d>"] = require("telescope.actions").delete_buffer
+                        }
+                    }
+                }
+            }
+        },
     },
+
 
     {
         "junegunn/fzf.vim",
@@ -107,10 +121,10 @@ return {
                 vim.g.ackprg = "rg --vimgrep"
             end
         end,
-        config = function()
-            vim.keymap.set("n", "<Leader>a.", ":Ack!<Space>", { noremap = true })
-            vim.keymap.set("n", "<Leader>ad", ":Ack!<Space><Space>%:p:h<left><left><left><left><left><left>", { noremap = true })
-        end,
+        keys = {
+            { "<leader>a.", ":Ack!<Space>", { noremap = true } },
+            { "<leader>ad", ":Ack!<Space><Space>%:p:h<left><left><left><left><left><left>", { noremap = true } },
+        },
     },
 
     "mbbill/undotree",
@@ -134,13 +148,11 @@ return {
         config = function()
             require("go").setup({
                 comment_placeholder = "",
-                max_line_len = 3000,
-                goimport = "golines",
             })
             vim.api.nvim_create_autocmd("BufWritePre", {
                 pattern = "*.go",
                 callback = function(_)
-                    require("go.format").goimport()
+                    require("go.format").goimports()
                 end
             })
             vim.api.nvim_create_autocmd("FileType", {
@@ -265,17 +277,14 @@ return {
 
             local cmp = require("cmp")
             cmp.setup {
-                mapping = {
-                  ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-                  ["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-                  ["<C-Space>"] = cmp.mapping.complete(),
-                  ["<C-e>"] = cmp.mapping.abort(),
-                  ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                },
+                mapping = cmp.mapping.preset.insert({
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+                }),
                 sources = {
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
                     { name = "buffer", keyword_length = 5 },
+                    { name = "beancount" },
                 },
                 formatting = {
                     format = function(entry, vim_item)
@@ -294,6 +303,7 @@ return {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-nvim-lua",
+    "crispgm/cmp-beancount",
     "ray-x/lsp_signature.nvim",
 --- }}}
 }
