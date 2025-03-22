@@ -1,17 +1,40 @@
 return {
-    "nvim-lua/plenary.nvim",
-
     {
-        "nathanaelkane/vim-indent-guides",
+        "echasnovski/mini.nvim",
+        version = false,
         config = function()
-            vim.api.nvim_set_hl(0, "IndentGuidesOdd", {ctermbg="black"})
-            vim.api.nvim_set_hl(0, "IndentGuidesEven", {ctermbg="darkgrey"})
-            vim.g.indent_guides_guide_size = 1
-            vim.g.indent_guides_start_level = 2
-            vim.g.indent_guides_default_mapping = 0
-            vim.call("indent_guides#enable")
+            require("mini.ai").setup()
+            require("mini.move").setup({
+                mappings = {
+                    down = '<M-j>',
+                    up = '<M-k>',
+                    left = '',
+                    right = '',
+
+                    -- Move current line in Normal mode
+                    line_left = '',
+                    line_right = '',
+                    line_down = '',
+                    line_up = '',
+                },
+            })
+            require("mini.comment").setup()
+            require("mini.surround").setup()
+            require("mini.indentscope").setup()
+            require("mini.notify").setup()
+            require("mini.sessions").setup()
+            require("mini.pairs").setup()
         end,
     },
+
+    {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require("gitsigns").setup()
+        end,
+    },
+
+    "nvim-lua/plenary.nvim",
 
     "folke/tokyonight.nvim",
 
@@ -27,22 +50,6 @@ return {
     "loctvl842/monokai-pro.nvim",
 
     "gbprod/nord.nvim",
-
-    {
-        "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup()
-        end,
-    },
-
-    {
-        "windwp/nvim-autopairs",
-        config = function()
-            require("nvim-autopairs").setup({
-                fast_wrap = {},
-            })
-        end,
-    },
 
     "L3MON4D3/LuaSnip",
 
@@ -128,9 +135,6 @@ return {
     },
 
     "mbbill/undotree",
-    "jlanzarotta/bufexplorer",
-    "ruanyl/vim-gh-line",
-    "tpope/vim-fugitive",
 
     {
         "nathangrigg/vim-beancount",

@@ -64,6 +64,9 @@ vim.keymap.set("n", "<C-t>", ":tabnew<cr>", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-s>", ":w<cr>", { noremap = true })
 vim.keymap.set("i", "<C-s>", "<esc>:w<cr>", { noremap = true })
 
+vim.keymap.set("n", "<leader>q", ":q<cr>", { noremap = true })
+vim.keymap.set("n", "<leader>tc", ":tabclose<cr>", { noremap = true })
+
 -- window switching keymaps
 vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true, noremap = true })

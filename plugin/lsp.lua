@@ -60,6 +60,9 @@ nvim_lsp.lua_ls.setup({
             telemetry = {
                 enable = false,
             },
+            format = {
+                enable = true,
+            },
         },
     },
 })
