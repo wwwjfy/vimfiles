@@ -119,8 +119,6 @@ return {
         end,
     },
 
-    "wwwjfy/numbered-tabline",
-
     {
         "mileszs/ack.vim",
         init = function()

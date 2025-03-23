@@ -50,6 +50,7 @@ nvim_lsp.lua_ls.setup({
             diagnostics = {
                 -- Get the language server to recognize the `vim` global
                 globals = {'vim'},
+                disable = { "lowercase-global" },
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files

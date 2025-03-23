@@ -102,7 +102,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"objc", "coffee", "html", "css", "scss", "ruby", "eruby", "yaml"},
+    pattern = {"objc", "coffee", "html", "css", "scss", "ruby", "eruby", "yaml", "lua"},
     callback = function(_)
         vim.o.tabstop = 2
         vim.o.softtabstop = 2
