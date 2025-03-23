@@ -24,6 +24,28 @@ return {
             require("mini.notify").setup()
             require("mini.sessions").setup()
             require("mini.pairs").setup()
+            require("mini.statusline").setup({
+              use_icons = false,
+              content = {
+                active = function()
+                  local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
+                  local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75 })
+                  local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
+                  local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120, use_icons = true })
+                  local location      = MiniStatusline.section_location({ trunc_width = 75 })
+
+                  return MiniStatusline.combine_groups({
+                    { hl = mode_hl,                  strings = { mode } },
+                    { hl = 'MiniStatuslineDevinfo',  strings = { diagnostics } },
+                    '%<', -- Mark general truncate point
+                    { hl = 'MiniStatuslineFilename', strings = { filename } },
+                    '%=', -- End left alignment
+                    { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+                    { hl = mode_hl,                  strings = { location } },
+                  })
+                end,
+              }
+            })
         end,
     },
 
@@ -101,21 +123,6 @@ return {
                 },
               },
             })
-        end,
-    },
-
-    {
-        "vim-airline/vim-airline",
-        config = function()
-            vim.g["airline#extensions#branch#enabled"] = 0
-        end,
-    },
-
-    {
-        "tmhedberg/SimpylFold",
-        ft = "python",
-        config = function()
-            vim.g.SimpylFold_fold_docstring = 0
         end,
     },
 
