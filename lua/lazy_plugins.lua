@@ -1,3 +1,12 @@
+status_line_filename = function()
+  -- In terminal always use plain name
+  if vim.bo.buftype == 'terminal' then
+    return '%t'
+  else
+    return '%f%m%r'
+  end
+end
+
 return {
     {
         "echasnovski/mini.nvim",
@@ -30,7 +39,7 @@ return {
                 active = function()
                   local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
                   local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-                  local filename      = MiniStatusline.section_filename({ trunc_width = 140 })
+                  local filename      = status_line_filename()
                   local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120, use_icons = true })
                   local location      = MiniStatusline.section_location({ trunc_width = 75 })
 
