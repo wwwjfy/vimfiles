@@ -6,18 +6,29 @@ local function show_items(options)
   if #options.items == 1 then
     local tagname = vim.fn.expand('<cword>')
     local from = vim.fn.getpos('.')
-    local win = vim.api.nvim_get_current_win()
+    local current_win = vim.api.nvim_get_current_win()
 
     local item = options.items[1]
     local b = item.bufnr or vim.fn.bufadd(item.filename)
 
     vim.cmd("normal! m'")
     local tagstack = { { tagname = tagname, from = from } }
-    vim.fn.settagstack(vim.fn.win_getid(win), { items = tagstack }, 't')
+    vim.fn.settagstack(vim.fn.win_getid(current_win), { items = tagstack }, 't')
 
     vim.bo[b].buflisted = true
-    local w = vim.fn.win_findbuf(b)[1]
+
+    -- open in current window if it matches
+    local wins = vim.fn.win_findbuf(b)
+    local w = wins[1]
+    for _, v in ipairs(wins) do
+      if v == current_win then
+        w = v
+        break
+      end
+    end
+
     vim.api.nvim_win_set_buf(w, b)
+    print(item.lnum, item.col)
     vim.api.nvim_win_set_cursor(w, { item.lnum, item.col - 1 })
     vim._with({ win = w }, function()
       vim.cmd('normal! zv')
