@@ -1,8 +1,6 @@
 local nvim_lsp = require("lspconfig")
 
 local function show_items(options)
-  position_encoding = vim.lsp.get_clients({ bufnr = 0 })[1].offset_encoding
-
   if #options.items == 1 then
     local tagname = vim.fn.expand('<cword>')
     local from = vim.fn.getpos('.')
@@ -19,7 +17,7 @@ local function show_items(options)
 
     -- open in current window if it matches
     local wins = vim.fn.win_findbuf(b)
-    local w = wins[1]
+    local w = wins[1] or 0
     for _, v in ipairs(wins) do
       if v == current_win then
         w = v
@@ -28,7 +26,6 @@ local function show_items(options)
     end
 
     vim.api.nvim_win_set_buf(w, b)
-    print(item.lnum, item.col)
     vim.api.nvim_win_set_cursor(w, { item.lnum, item.col - 1 })
     vim._with({ win = w }, function()
       vim.cmd('normal! zv')
