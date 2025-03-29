@@ -8,6 +8,7 @@ vim.o.expandtab = true
 vim.o.foldmethod = "marker"
 vim.o.whichwrap = vim.o.whichwrap .. "<,>,h,l"
 vim.o.splitright = true
+vim.diagnostic.config({ signs = true, virtual_text = true })
 -- }}}
 
 -- Display {{{
@@ -27,6 +28,7 @@ vim.o.cursorcolumn = true
 vim.o.colorcolumn = "+0"
 vim.o.showtabline = 2
 vim.o.termguicolors = true
+vim.o.winborder = "rounded"
 
 vim.api.nvim_set_hl(0, "WhiteSpaceEOL", {ctermbg="red"})
 vim.fn.matchadd("WhiteSpaceEOL", "\\s\\+$")
