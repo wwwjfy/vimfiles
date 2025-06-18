@@ -132,18 +132,6 @@ return {
         end,
     },
 
-    {
-        "mileszs/ack.vim",
-        init = function()
-            if vim.fn.executable("rg") then
-                vim.g.ackprg = "rg --vimgrep"
-            end
-        end,
-        keys = {
-            { "<leader>a.", ":Ack!<Space>", { noremap = true } },
-            { "<leader>ad", ":Ack!<Space><Space>%:p:h<left><left><left><left><left><left>", { noremap = true } },
-        },
-    },
 
     "mbbill/undotree",
 
