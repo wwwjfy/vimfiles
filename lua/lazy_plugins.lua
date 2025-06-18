@@ -1,12 +1,3 @@
-status_line_filename = function()
-  -- In terminal always use plain name
-  if vim.bo.buftype == 'terminal' then
-    return '%t'
-  else
-    return '%f%m%r'
-  end
-end
-
 return {
     {
         "echasnovski/mini.nvim",
@@ -39,7 +30,10 @@ return {
                 active = function()
                   local mode, mode_hl = MiniStatusline.section_mode({ trunc_width = 120 })
                   local diagnostics   = MiniStatusline.section_diagnostics({ trunc_width = 75 })
-                  local filename      = status_line_filename()
+                  local filename = '%f%m%r'
+                  if vim.bo.buftype == 'terminal' then
+                    filename = '%t'
+                  end
                   local fileinfo      = MiniStatusline.section_fileinfo({ trunc_width = 120, use_icons = true })
                   local location      = MiniStatusline.section_location({ trunc_width = 75 })
 
@@ -53,10 +47,27 @@ return {
                     { hl = mode_hl,                  strings = { location } },
                   })
                 end,
+                inactive = function() return '%f%=' end,
               }
             })
         end,
     },
+
+    {
+      "ibhagwan/fzf-lua",
+      config = function()
+        require("fzf-lua").setup({
+          winopts = {
+            preview = {
+              hidden = true,
+            }
+          },
+        })
+        vim.keymap.set({"n"}, "<C-p>", require("fzf-lua").files, { noremap = true })
+        vim.keymap.set({"n"}, "<M-p>", function () require("fzf-lua").files({ cwd = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":p:h") }) end, { noremap = true })
+      end,
+    },
+
 
     {
         "lewis6991/gitsigns.nvim",
@@ -64,8 +75,6 @@ return {
             require("gitsigns").setup()
         end,
     },
-
-    "nvim-lua/plenary.nvim",
 
     "folke/tokyonight.nvim",
 
@@ -79,8 +88,6 @@ return {
     },
 
     "loctvl842/monokai-pro.nvim",
-
-    "gbprod/nord.nvim",
 
     "L3MON4D3/LuaSnip",
 
@@ -102,16 +109,6 @@ return {
                 }
             }
         },
-    },
-
-
-    {
-        "junegunn/fzf.vim",
-        config = function()
-            vim.keymap.set("n", "<C-p>", ":Files<cr>")
-            vim.keymap.set("n", "<M-p>", ":Files %:h<cr>", { noremap = true })
-            vim.g.fzf_preview_window = ""
-        end,
     },
 
     {
@@ -153,33 +150,6 @@ return {
     {
         "nathangrigg/vim-beancount",
         ft = "beancount",
-    },
-
-    {
-        "aliva/vim-fish",
-        ft = "fish",
-    },
-
-    {
-        "ray-x/go.nvim",
-        ft = "go",
-        config = function()
-            require("go").setup({
-                comment_placeholder = "",
-            })
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                pattern = "*.go",
-                callback = function(_)
-                    require("go.format").goimports()
-                end
-            })
-            vim.api.nvim_create_autocmd("FileType", {
-                pattern = "go",
-                callback = function(_)
-                    vim.keymap.set("n", "<C-w>x", ":GoAltV<cr>", { noremap = true })
-                end
-            })
-        end,
     },
 
     "ray-x/guihua.lua",
@@ -232,6 +202,28 @@ return {
     },
 
 -- {{{ File Types
+    {
+        "ray-x/go.nvim",
+        ft = "go",
+        config = function()
+            require("go").setup({
+                comment_placeholder = "",
+            })
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = "*.go",
+                callback = function(_)
+                    require("go.format").goimports()
+                end
+            })
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "go",
+                callback = function(_)
+                    vim.keymap.set("n", "<C-w>x", ":GoAltV<cr>", { noremap = true })
+                end
+            })
+        end,
+    },
+
     {
         "hashivim/vim-terraform",
         ft = "terraform",

@@ -142,17 +142,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local fzf_rtp = function()
-    local fzf_path = vim.fn["system"]("brew --prefix fzf")
-    return string.sub(fzf_path, 1, #fzf_path - 1)
-end
-
 require("lazy").setup("lazy_plugins", {
-    performance = {
-        rtp = {
-            paths = { fzf_rtp() },
-        },
-    },
     ui = {
         icons = {
             cmd = "⌘",

@@ -4,7 +4,7 @@ local function get_tab_label(n)
   local buflist = vim.fn.tabpagebuflist(n)
   local winnr = vim.fn.tabpagewinnr(n)
   local filename = vim.fn.bufname(buflist[winnr])
-  local label = string.format(" %d %s", n, (filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')))
+  local label = string.format(" %d %s ", n, (filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')))
 
   if vim.fn.getbufvar(buflist[winnr], '&modified') == 1 then
     label = label .. '[+]'
