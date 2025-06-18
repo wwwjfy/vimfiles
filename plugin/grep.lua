@@ -1,12 +1,24 @@
 local M = {}
 
+local function check_ripgrep()
+    if vim.fn.executable("rg") == 0 then
+        vim.notify("ripgrep (rg) is not installed or not in PATH.", vim.log.levels.ERROR, { title = "Grep Error" })
+        return false
+    end
+    return true
+end
+
 local function execute_grep(pattern, directory, extra_args)
     if not pattern or pattern == "" then
         print("No search pattern provided")
         return
     end
 
-    local cmd = {"xg", "--vimgrep", "--color=never"}
+    if not check_ripgrep() then
+        return
+    end
+
+    local cmd = {"rg", "--vimgrep", "--color=never"}
 
     if extra_args then
         for _, arg in ipairs(extra_args) do
