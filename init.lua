@@ -76,8 +76,20 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true, noremap = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true, noremap = true })
 
 -- quickfix switching keymaps
-vim.keymap.set("n", "<M-j>", ":cnext<cr>", { silent = true, noremap = true })
-vim.keymap.set("n", "<M-k>", ":cprev<cr>", { silent = true, noremap = true })
+vim.keymap.set("n", "<M-j>", function()
+  if vim.fn.getqflist({ winid = 1 }).winid > 0 then
+    vim.cmd("cnext")
+  else
+    vim.cmd("lnext")
+  end
+end, { silent = true, noremap = true })
+vim.keymap.set("n", "<M-k>", function ()
+  if vim.fn.getqflist({ winid = 1 }).winid > 0 then
+    vim.cmd("cprev")
+  else
+    vim.cmd("lprev")
+  end
+end, { silent = true, noremap = true })
 
 -- Emacs-compatible keys
 vim.keymap.set("c", "<C-a>", "<home>", { noremap = true })

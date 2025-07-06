@@ -85,18 +85,28 @@ function M.grep_global()
     end
 end
 
+function M.grep_word(pattern, directory)
+    execute_grep(pattern, directory, {"-w"})
+end
+
+function M.grep_word_current_dir()
+    local ok, pattern = pcall(vim.fn.input, "Grep word in current dir: ")
+    if ok and pattern and pattern ~= "" then
+        local current_dir = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":p:h")
+        execute_grep(pattern, current_dir, {"-w"})
+    end
+end
+
+function M.grep_word_global()
+    local ok, pattern = pcall(vim.fn.input, "Grep word: ")
+    if ok and pattern and pattern ~= "" then
+        execute_grep(pattern, nil, {"-w"})
+    end
+end
+
 vim.keymap.set("n", "<leader>a.", M.grep_global, { noremap = true, desc = "Grep globally" })
 vim.keymap.set("n", "<leader>ad", M.grep_current_dir, { noremap = true, desc = "Grep in current directory" })
-
-vim.api.nvim_create_user_command("Grep", function(opts)
-    M.grep(opts.args)
-end, { nargs = 1 })
-
-vim.api.nvim_create_user_command("GrepDir", function(opts)
-    local args = vim.split(opts.args, " ", { trimempty = true })
-    local pattern = args[1]
-    local directory = args[2] or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":p:h")
-    M.grep(pattern, directory)
-end, { nargs = "+" })
+vim.keymap.set("n", "<leader>aw.", M.grep_word_global, { noremap = true, desc = "Grep word globally" })
+vim.keymap.set("n", "<leader>awd", M.grep_word_current_dir, { noremap = true, desc = "Grep word in current directory" })
 
 return M

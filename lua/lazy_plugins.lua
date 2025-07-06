@@ -68,7 +68,6 @@ return {
       end,
     },
 
-
     {
         "lewis6991/gitsigns.nvim",
         config = function()
@@ -88,6 +87,16 @@ return {
     },
 
     "loctvl842/monokai-pro.nvim",
+
+    {
+      "patil-suraj/ghibli.nvim",
+      config = function()
+        require("ghibli").setup({
+          style = "dark",
+        })
+      end,
+    },
+
 
     "L3MON4D3/LuaSnip",
 
