@@ -176,7 +176,7 @@ require("lazy").setup("lazy_plugins", {
 
 -- Colorscheme {{{
 vim.o.background = "dark"
-vim.cmd.colorscheme("monokai-pro")
+vim.cmd.colorscheme("sonokai")
 -- }}}
 
 -- Tab {{{

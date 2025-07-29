@@ -133,7 +133,7 @@ function numberred_tabline()
 
     -- Rebuild flexible list from current limits
     flexible = {}
-    for i = 0, nr_total - 1 do
+    for i = 1, nr_total do
       if limits[i] > 0 and limits[i] < lengths[i] then
         table.insert(flexible, i)
       end

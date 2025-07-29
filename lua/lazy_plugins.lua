@@ -88,6 +88,8 @@ return {
 
     "loctvl842/monokai-pro.nvim",
 
+    "sainnhe/sonokai",
+
     {
       "patil-suraj/ghibli.nvim",
       config = function()
