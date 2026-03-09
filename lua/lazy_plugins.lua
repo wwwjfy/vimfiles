@@ -194,11 +194,21 @@ return {
                 view_options = {
                     show_hidden = true,
                 },
+                win_options = {
+                    signcolumn = "yes:2",
+                },
             })
 
             vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
         end,
     },
+
+    {
+      "refractalize/oil-git-status.nvim",
+      config = true,
+    },
+
+    "sitiom/nvim-numbertoggle",
 
 -- {{{ File Types
     {
@@ -251,6 +261,8 @@ return {
             vim.g.rustfmt_autosave = 1
         end,
     },
+
+    "MeanderingProgrammer/render-markdown.nvim",
 -- }}}
 
 ---{{{ LSP
